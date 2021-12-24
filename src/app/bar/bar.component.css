@@ -35,4 +35,48 @@ header .menu-button {
 
 header .app-title {
             padding: 0 3px;
+            font-size: 18px;
         }
+
+        .sidenav-container {
+    flex: 1;
+}
+
+.sidenav-container .sidenav {
+    min-width: 240px;
+}
+
+.sidenav a {
+    display: block;
+    padding: 6px 24px;
+    width: 100%;
+    text-align: left;
+}
+
+.sidenav-container main {
+    padding: 18px 24px;
+}
+
+.sidenav-container {
+    flex: 1;
+}
+
+.sidenav-container .sidenav {
+    min-width: 240px;
+}
+
+.sidenav a {
+    display: block;
+    padding: 6px 24px;
+    width: 100%;
+    text-align: left;
+}
+
+.sidenav-container main {
+    padding: 18px 24px;
+}
+
+.sidelem span {
+    margin-left: 7px;
+    padding: 2px;
+}

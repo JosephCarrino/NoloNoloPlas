@@ -1,0 +1,28 @@
+<div class="page-container">
+    <header *ngIf="_router.url != '/register' && _router.url != '/login'">
+      <div>
+        <button mat-button class="menu-button" (click)="sidenav.toggle()">
+          <mat-icon>{{ isMenuOpen ? 'menu_open' : 'menu' }}</mat-icon>
+        </button>
+    
+        <a routerLink="/">
+          <span class="app-title">NoloNoloPlas</span>
+        </a>
+      </div>
+    </header>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav autoFocus="false" mode="over" [(opened)]="isMenuOpen" class="sidenav">
+      <a class="sidelem" mat-button routerLink="/" (click)="sidenav.toggle()"><mat-icon>home</mat-icon><span>Home</span></a>
+      <a class="sidelem" mat-button routerLink="/login" *ngIf="!isLogged" (click)="sidenav.toggle()"><mat-icon>login</mat-icon><span>Accedi</span></a>
+      <a class="sidelem" mat-button routerLink="/register" *ngIf="!isLogged" (click)="sidenav.toggle()"><mat-icon>how_to_reg</mat-icon><span>Registrati</span></a>
+      <a class="sidelem" mat-button routerLink="/profile" *ngIf="isLogged" (click)="sidenav.toggle()">Profilo</a>
+      <a class="sidelem" mat-button routerLink="/rentals" *ngIf="isLogged" (click)="sidenav.toggle()">Ordini</a>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  </div>

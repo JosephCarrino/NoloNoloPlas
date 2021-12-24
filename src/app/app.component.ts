@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'front-office';
+  public isLogged: boolean = false;
 }
+
+
