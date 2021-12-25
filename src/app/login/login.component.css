@@ -17,3 +17,14 @@ mat-form-field {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+
+.danger {
+    color: #ff2b2b;
+    margin: 10px;
+}
+
+mat-spinner {
+    position:relative;
+    left: 50%;
+    transform: translateX(-50%);
+}

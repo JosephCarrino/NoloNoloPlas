@@ -51,3 +51,9 @@ import 'zone.js';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+//Aggiunte queste tre righe per il problema del process not found
+//In caso, rimuoverle e togliere l'import di verifier.js da auth.ts
+ (window as any).global = window;
+ global.Buffer = global.Buffer || require('buffer').Buffer;
+ global.process = require('process');

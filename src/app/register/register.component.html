@@ -1,1 +1,39 @@
-<p>register works!</p>
+<div class="registerform">
+    <h1>NoloNoloPlas</h1>
+    <h3>Registrati</h3>
+    <form id="regform" [formGroup]="regForm" #formDir="ngForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+            <mat-label for="name">Inserisci nome</mat-label>
+            <input matInput id="surname" placeholder= "Mario" [type]="'text'" formControlName="name" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label for="surname">Inserisci cognome</mat-label>
+            <input matInput id="surname" placeholder= "Rossi" [type]="'text'" formControlName="surname" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label for="username">Inserisci username</mat-label>
+            <input matInput id="username" placeholder= "MarioRossi" [type]="'text'" formControlName="username" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label for="password">Inserisci password</mat-label>
+            <input matInput id="password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
+            <button type= "button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label for="paymentmethod">Inserisci metodo di pagamento</mat-label>
+            <input matInput id="paymeth" placeholder= "PayPal" [type]="'text'" formControlName="paymentmethod" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label for="residence">Inserisci residenza</mat-label>
+            <input matInput id="residence" placeholder= "Milano (MI)" [type]="'text'" formControlName="residence">
+        </mat-form-field>
+        <br>
+        <p class="danger" *ngIf="wrong">Campi non compilati correttamente.</p>
+        <p color="primary" *ngIf="registered">Registrazione effettuata! Reindirizzamento al login.</p>
+        <button mat-raised-button color="primary" type="submit" id="submitbutton">Registrati</button>
+        <mat-spinner *ngIf="inProgress"></mat-spinner>
+    </form>
+
+</div>

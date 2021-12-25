@@ -17,5 +17,9 @@ export class BarComponent implements OnInit {
     return isLoggedIn();
   }
 
+  logout(): void{
+    localStorage.clear();
+  }
+
   public isMenuOpen: boolean = false;
 }
