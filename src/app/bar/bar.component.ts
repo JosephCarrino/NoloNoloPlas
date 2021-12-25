@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { isLogged } from '../globals'
-import { Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef, ApplicationRef } from '@angular/core';
+import { isLoggedIn } from '../utils/auth';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-bar',
@@ -9,11 +9,13 @@ import { Router } from '@angular/router';
 })
 export class BarComponent implements OnInit {
  
-  constructor(public _router: Router) {}
+  constructor(public _router: Router, public cd: ChangeDetectorRef, private ref: ApplicationRef) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  mylog() {
+    return isLoggedIn();
   }
 
-  public isLogged: boolean = isLogged
   public isMenuOpen: boolean = false;
 }

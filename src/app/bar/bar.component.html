@@ -14,10 +14,10 @@
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav autoFocus="false" mode="over" [(opened)]="isMenuOpen" class="sidenav">
       <a class="sidelem" mat-button routerLink="/" (click)="sidenav.toggle()"><mat-icon>home</mat-icon><span>Home</span></a>
-      <a class="sidelem" mat-button routerLink="/login" *ngIf="!isLogged" (click)="sidenav.toggle()"><mat-icon>login</mat-icon><span>Accedi</span></a>
-      <a class="sidelem" mat-button routerLink="/register" *ngIf="!isLogged" (click)="sidenav.toggle()"><mat-icon>how_to_reg</mat-icon><span>Registrati</span></a>
-      <a class="sidelem" mat-button routerLink="/profile" *ngIf="isLogged" (click)="sidenav.toggle()">Profilo</a>
-      <a class="sidelem" mat-button routerLink="/rentals" *ngIf="isLogged" (click)="sidenav.toggle()">Ordini</a>
+      <a class="sidelem" mat-button routerLink="/login" *ngIf="mylog() == false" (click)="sidenav.toggle()"><mat-icon>login</mat-icon><span>Accedi</span></a>
+      <a class="sidelem" mat-button routerLink="/register" *ngIf="mylog() == false" (click)="sidenav.toggle()"><mat-icon>how_to_reg</mat-icon><span>Registrati</span></a>
+      <a class="sidelem" mat-button routerLink="/profile" *ngIf="mylog() == true" (click)="sidenav.toggle()">Profilo</a>
+      <a class="sidelem" mat-button routerLink="/rentals" *ngIf="mylog() == true" (click)="sidenav.toggle()">Ordini</a>
     </mat-sidenav>
     <mat-sidenav-content>
       <main>

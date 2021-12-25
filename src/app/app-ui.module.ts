@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const uiModules = [
   MatSidenavModule,
@@ -15,7 +15,8 @@ const uiModules = [
   FormsModule,
   ReactiveFormsModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatProgressSpinnerModule
 ]
 
 @NgModule({

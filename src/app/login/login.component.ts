@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
+import { login, isLoggedIn } from '../utils/auth';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,30 +9,32 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  email = new FormControl('', [Validators.required, Validators.email]);
   
+  public wrong: boolean = false;
+  public inProgress: boolean = false;
   hide = true;
   
   loginForm = this.formBuilder.group({
-    email: '',
+    username: '',
     password: ''
-  })
+  });
 
-  getErrorMessage() {
-    if (this.email.hasError('required'))  {
-      return 'Inserisci un\' email';
-    }
-
-    return this.email.hasError('email') ? 'Email non valida'
-  : '';
-  }
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit(): void {
-    console.log("Acceduto");
+  async onSubmit(): Promise<void> {
+    this.wrong = false;
+    this.inProgress = true;
+    await login(this.loginForm.value.username, this.loginForm.value.password);
+    if(isLoggedIn()){
+      this.inProgress = false;
+      this.router.navigate(['../']);
+    } else {
+      this.inProgress = false;
+      this.wrong = true;
+    }
   }
 
 }
