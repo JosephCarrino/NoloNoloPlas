@@ -23,13 +23,30 @@ export class RegisterComponent implements OnInit {
   }
 
   regForm = this.formBuilder.group({
-    name: '',
-    surname: '',
-    username: '',
-    password: '',
-    paymentmethod: '',
-    residence:  ''
+    name: 'mario',
+    surname: 'rossi',
+    username: 'mariorossi',
+    password: 'prova',
+    paymentmethod: 'PayPal',
+    residence:  'Napoli (NA)',
+    avatar: ''
   })
+
+  onFileChange(event:any) {
+
+  
+
+    if (event.target.files.length > 0) {
+
+      const file = event.target.files.item(0);
+      this.regForm.patchValue({
+
+        avatar: file
+
+      });
+    }
+
+  }
 
   async onSubmit(): Promise<void> {
     this.wrong = false;

@@ -39,11 +39,20 @@ interface regForm {
     password: string;
     paymentmethod: string;
     residence: string;
-    avatar: string;
+    avatar: File;
 }
 
 export async function register(data: regForm){
     try{
+        /*var newObject  = {
+            'lastModified'     : data.avatar.lastModified,
+            'name'             : data.avatar.name,
+            'size'             : data.avatar.size,
+            'type'             : data.avatar.type,
+            'webkitRelativePath': data.avatar.webkitRelativePath
+         };  
+        data.avatar = newObject;*/
+
         let res: any = await fetch(REGISTER_URL,  {
             method: 'POST',
             mode: 'cors',

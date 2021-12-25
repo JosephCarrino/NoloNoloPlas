@@ -30,8 +30,12 @@
             <input matInput id="residence" placeholder= "Milano (MI)" [type]="'text'" formControlName="residence">
         </mat-form-field>
         <br>
+            <label for="avatar">Inserisci un avatar</label><br>
+            <input type="file" name="avatar" id="avatar" (change)="onFileChange($event)">
+        <br>
         <p class="danger" *ngIf="wrong">Campi non compilati correttamente.</p>
-        <p color="primary" *ngIf="registered">Registrazione effettuata! Reindirizzamento al login.</p>
+        <p class="succeded" *ngIf="registered">Registrazione effettuata! Reindirizzamento al login.</p>
+        <br>
         <button mat-raised-button color="primary" type="submit" id="submitbutton">Registrati</button>
         <mat-spinner *ngIf="inProgress"></mat-spinner>
     </form>
