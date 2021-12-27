@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { register } from '../utils/auth';
+import { register } from '../utils/APIs';
 import { Router } from '@angular/router'
 
 
@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
 
     if (event.target.files.length > 0) {
 
-      const file = event.target.files.item(0);
+      const file = event.target.files[0];
       this.regForm.patchValue({
 
         avatar: file
@@ -51,7 +51,12 @@ export class RegisterComponent implements OnInit {
   async onSubmit(): Promise<void> {
     this.wrong = false;
     this.inProgress = true;
-    let didReg: boolean = await register(this.regForm.value);
+    let toSend = new FormData();
+    for(let field in this.regForm.value) {
+      if(this.regForm.value[field] != "")
+        toSend.append(field, this.regForm.value[field]);
+    }
+    let didReg: boolean = await register(toSend);
     if(didReg){
       this.registered = true;
       setTimeout(() => {this.inProgress = false; this.router.navigate(['/login'])}, 5000)

@@ -34,6 +34,18 @@ async function login(username: string, password: string){
     }
 };
 
+export async function register(regForm: any){
+    try {
+        const response =  await axios.post(getUserUrl, regForm, { data: {standardHeaders} })
+        if(response.status === 200)
+            return true;
+        else
+            return false;
+    } catch (err: any) {
+        return false;
+    }
+};
+
 export async function getUserInfo(id: string){
     try{
         const response = await axios.get(getUserUrl + id, { headers: {...advancedHeaders}});
