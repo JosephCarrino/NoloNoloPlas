@@ -49,12 +49,19 @@ mat-grid-list{
 }
 
 #proimgdiv{
+    resize: none;
     margin-right: 50px;
 }
 
 #proimg{
+    resize: none;
     margin-right: 50px;
     border-radius: 50%;
     border: 1px solid #f7f7f7;
 }
 
+.centered{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
