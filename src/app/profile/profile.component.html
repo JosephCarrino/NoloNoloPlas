@@ -1,0 +1,49 @@
+<mat-grid-list [cols]="breakpoint" rowHeight="90vh" (window:resize)="onResize($event)">
+    <mat-grid-tile id="lastile" [colspan]="notBreakpoint" rowspawn=".5" rowhHeight="20vh" class="propic">
+        <div id="proimgdiv">
+            <img id="proimg" [style.width.%]="imgWidth" src="/assets/images/defaultPropic.png">
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="3" rowspawn="1" class="main">
+        <form autocomplete="off" id="patchForm" [formGroup]="patchForm" #formDir="ngForm" (ngSubmit)="onSubmit()">
+            <mat-form-field>
+                <mat-label for="name">Inserisci nome</mat-label>
+                <input matInput id="name" placeholder= "Mario" [type]="'text'" formControlName="name" required>
+            </mat-form-field>
+            <mat-form-field [ngClass]="oneCol ? '' : 'odd'">
+                <mat-label for="surname">Inserisci cognome</mat-label>
+                <input matInput id="surname" placeholder= "Rossi" [type]="'text'" formControlName="surname" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label for="username">Inserisci username</mat-label>
+                <input matInput id="username" placeholder= "MarioRossi" [type]="'text'" formControlName="username" required>
+            </mat-form-field>
+            <mat-form-field [ngClass]="oneCol ? '' : 'odd'">
+                <mat-label for="password">Inserisci password</mat-label>
+                <input matInput id="password" [type]="'password'" formControlName="password" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label for="paymentmethod">Inserisci metodo di pagamento</mat-label>
+                <mat-select id="paymeth" formControlName="paymentmethod" required>
+                    <mat-option value="PayPal">PayPal</mat-option>
+                    <mat-option value="Visa">Visa</mat-option>
+                    <mat-option value="Mastercard">Mastercard</mat-option>
+                    <mat-option value="Hype">Hype</mat-option>
+                </mat-select>
+            </mat-form-field>
+                <mat-form-field id="resfield" [ngClass]="oneCol ? '' : 'odd'">
+                    <mat-label for="residence">Inserisci residenza</mat-label>
+                    <input matInput id="residence" placeholder= "Milano (MI)" [type]="'text'" formControlName="residence">
+                </mat-form-field>
+                <p class="danger" *ngIf="wrong">Campi non compilati correttamente.</p>
+        <p class="succeded" *ngIf="patched">Dati modificati correttamente</p>
+                <div id="buttons">
+                    <button mat-raised-button color="primary" type="submit" id="submitbutton">Modifica Profilo</button>
+                    <button mat-raised-button color="white" type="button" routerLink="/" id="undobutton">Annulla</button>
+                </div>
+                <mat-spinner *ngIf="inProgress"></mat-spinner>
+            </form>
+    </mat-grid-tile>
+</mat-grid-list>

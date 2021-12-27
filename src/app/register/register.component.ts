@@ -23,12 +23,12 @@ export class RegisterComponent implements OnInit {
   }
 
   regForm = this.formBuilder.group({
-    name: 'mario',
-    surname: 'rossi',
-    username: 'mariorossi',
-    password: 'prova',
-    paymentmethod: 'PayPal',
-    residence:  'Napoli (NA)',
+    name: '',
+    surname: '',
+    username: '',
+    password: '',
+    paymentmethod: '',
+    residence:  '',
     avatar: ''
   })
 

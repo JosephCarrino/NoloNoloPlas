@@ -1,6 +1,7 @@
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { checkValidity } from './verifier.js';
 
+import jwt_decode from 'jwt-decode';
 
 const jwt = new JwtHelperService();
 const DOMAIN =  '//site202129.tw.cs.unibo.it';
@@ -76,11 +77,17 @@ export async function register(data: regForm){
 }
 
 export function setToken(token: string){
-    localStorage[ACCESS_TOKEN_STORAGE] = token
+    localStorage[ACCESS_TOKEN_STORAGE] = token;
+    let myObj: any = jwt_decode(token);
+    localStorage['userId'] = myObj.id; 
 }
 
 export function getToken(){
-    return localStorage[ACCESS_TOKEN_STORAGE]
+    return localStorage[ACCESS_TOKEN_STORAGE];
+}
+
+export function getUserId(){
+    return localStorage['userId'];
 }
 
 async function getPubKey(){

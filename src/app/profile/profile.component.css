@@ -1,0 +1,60 @@
+form {
+    background-color: #f7f7f7;
+    padding: 40px;
+}
+
+.full-width{
+    width: 100%;
+}
+
+#patchForm{
+    margin: auto;
+    padding: auto;
+}
+
+
+mat-form-field{
+    margin: auto;
+    margin-top: 3vh;
+}
+
+.odd{
+    margin-left: 30px;
+}
+
+form {
+    position: relative;
+    top: -30px;
+}
+
+#lastile{
+    width: 1000px;
+}
+
+mat-grid-list{
+    height: 40vh;
+    width: 70%;
+    margin: auto;
+}
+
+#buttons{
+    margin-top: 40px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#undobutton{
+    margin-right: 10px;
+}
+
+#proimgdiv{
+    margin-right: 50px;
+}
+
+#proimg{
+    margin-right: 50px;
+    border-radius: 50%;
+    border: 1px solid #f7f7f7;
+}
+

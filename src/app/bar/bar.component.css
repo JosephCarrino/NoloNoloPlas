@@ -1,6 +1,6 @@
 .page-container {
     height: 100%;
-    background: #fafafa;
+    background: grey;
     color: #000;
 
     display: flex;
@@ -38,7 +38,8 @@ header .app-title {
             font-size: 18px;
         }
 
-        .sidenav-container {
+.sidenav-container {
+    background-color: #f2f2f2;
     flex: 1;
 }
 
@@ -80,3 +81,4 @@ header .app-title {
     margin-left: 7px;
     padding: 2px;
 }
+

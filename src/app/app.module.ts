@@ -9,13 +9,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BarComponent } from './bar/bar.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+import { NotLoggedGuardService } from './not-logged-guard.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     BarComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +26,7 @@ import { LoginComponent } from './login/login.component';
     BrowserAnimationsModule,
     AppUiModule
   ],
-  providers: [],
+  providers: [NotLoggedGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
