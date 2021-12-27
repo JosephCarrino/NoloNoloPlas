@@ -17,7 +17,7 @@
       <a class="sidelem" mat-button routerLink="/login" *ngIf="mylog() == false" (click)="sidenav.toggle()"><mat-icon>login</mat-icon><span>Accedi</span></a>
       <a class="sidelem" mat-button routerLink="/register" *ngIf="mylog() == false" (click)="sidenav.toggle()"><mat-icon>how_to_reg</mat-icon><span>Registrati</span></a>
       <a class="sidelem" mat-button routerLink="/profile" *ngIf="mylog() == true" (click)="sidenav.toggle()"><mat-icon>manage_account</mat-icon><span>Profilo</span></a>
-      <a class="sidelem" mat-button routerLink="/rentals" *ngIf="mylog() == true" (click)="sidenav.toggle()"><mat-icon>checklist</mat-icon><span>Ordini</span></a>
+      <a class="sidelem" mat-button routerLink="/history" *ngIf="mylog() == true" (click)="sidenav.toggle()"><mat-icon>checklist</mat-icon><span>Ordini</span></a>
       <a class="sidelem" mat-button routerLink="/" *ngIf="mylog() == true" (click)="sidenav.toggle();logout()"><mat-icon>logout</mat-icon><span>Esci</span></a>
     </mat-sidenav>
     <mat-sidenav-content>

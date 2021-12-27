@@ -11,6 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NotLoggedGuardService } from './not-logged-guard.service';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NotLoggedGuardService } from './not-logged-guard.service';
     BarComponent,
     RegisterComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,

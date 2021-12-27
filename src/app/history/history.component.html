@@ -1,0 +1,18 @@
+<div *ngFor="let rental of myRentals " class="rental">
+    <div class="article">{{ rental.myItem.name }}</div>
+    <br>
+    <div class="rental"><p>
+        {{ rental.date_start}}
+    </p>
+        <p>
+            {{ rental.date_end}}
+        </p>
+        <p>
+            {{ rental.state}}
+        </p>
+        <p>
+            {{ rental.estimated}}
+        </p>
+    </div>
+    
+</div>

@@ -31,9 +31,21 @@ export class ProfileComponent implements OnInit {
     username: '',
     password: '',
     paymentmethod: '',
-    residence:  '',
-    avatar: ''
+    residence:  ''
   })
+  retrievedForm = this.formBuilder.group({
+    name: '',
+    surname: '',
+    username: '',
+    password: '',
+    paymentmethod: '',
+    residence:  ''
+  })
+
+  getPlace(field: string): string{
+    return this.retrievedForm.value[field];
+  }
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -58,13 +70,19 @@ export class ProfileComponent implements OnInit {
 
   async refillForm(): Promise<void> {
     let res: any = await getUserInfo(getUserId());
+    this.retrievedForm = this.formBuilder.group(res.data);
+    res.data.password = "";
     this.patchForm = this.formBuilder.group(res.data);
+    this.patchForm.value['password'] = "";
   }
 
   async onSubmit(): Promise<void> {
     this.inProgress = true;
-    let toSend: any = this.patchForm.value;
-    toSend['id'] = getUserId();
+    let toSend = new FormData();
+    for(let field in this.patchForm.value) {
+      if(this.patchForm.value[field] != "")
+        toSend.append(field, this.patchForm.value[field]);
+    }
     let res: boolean = await patchUser(getUserId(), toSend);
     this.inProgress = false;
     this.wrong = !res;

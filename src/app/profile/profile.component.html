@@ -1,32 +1,47 @@
 <mat-grid-list [cols]="breakpoint" rowHeight="90vh" (window:resize)="onResize($event)">
-    <mat-grid-tile id="lastile" [colspan]="notBreakpoint" rowspawn=".5" rowhHeight="20vh" class="propic">
+    <mat-grid-tile id="lastile" [colspan]="notBreakpoint" rowspawn=".5" rowhHeight="20vh" class="propic" min-width="300px">
         <div id="proimgdiv" [ngClass]="oneCol ? 'centered' : ''">
-            <img [ngClass]="oneCol ? 'centered' : ''" id="proimg" [style.width.%]="imgWidth" src="assets/images/defaultPropic.png">
+            <img [ngClass]="oneCol ? 'centered' : ''" id="proimg" [style.width.%]="imgWidth" src="assets/images/defaultPropic.png" min-width="300px">
         </div>
+        <!--<mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title>{{this.retrievedForm.value['username']}}</mat-card-title>
+              <mat-card-subtitle>Cliente</mat-card-subtitle>
+              <br *ngIf="oneCol">
+              <img mat-card-sm-image src="assets/images/defaultPropic.png" class="propicimage">
+            </mat-card-header>
+            <mat-card-content>
+              <table [attr.colspan]="oneCol ? '1' : '2'"></table>
+              <tr><td>Nome: {{this.retrievedForm.value['name']}}</td>
+                <td *ngIf="!oneCol"><tr *ngIf="oneCol">Cognome: {{this.retrievedForm.value['surname']}}</tr></td>
+            </tr>
+            </mat-card-content>
+          </mat-card>-->
+          
     </mat-grid-tile>
     <mat-grid-tile colspan="3" rowspawn="1" class="main">
         <form  [ngClass]="oneCol ? 'topped' : ''" autocomplete="off" id="patchForm" [formGroup]="patchForm" #formDir="ngForm" (ngSubmit)="onSubmit()">
-            <mat-form-field [ngClass]="oneCol ? 'centered' : ''">
+            <mat-form-field [ngClass]="oneCol ? 'centered' : ''" >
                 <mat-label for="name">Inserisci nome</mat-label>
-                <input matInput id="name" placeholder= "Mario" [type]="'text'" formControlName="name" required>
+                <input matInput id="name" placeholder= "Mario" [type]="'text'" formControlName="name" [placeholder]="getPlace('name')">
             </mat-form-field>
             <mat-form-field [ngClass]="oneCol ? 'centered' : 'odd'">
                 <mat-label for="surname">Inserisci cognome</mat-label>
-                <input matInput id="surname" placeholder= "Rossi" [type]="'text'" formControlName="surname" required>
+                <input matInput id="surname" placeholder= "Rossi" [type]="'text'" formControlName="surname" [placeholder]="getPlace('surname')">
             </mat-form-field>
             <br>
             <mat-form-field [ngClass]="oneCol ? 'centered' : ''">
                 <mat-label for="username">Inserisci username</mat-label>
-                <input matInput id="username" placeholder= "MarioRossi" [type]="'text'" formControlName="username" required>
+                <input matInput id="username" placeholder= "MarioRossi" [type]="'text'" formControlName="username" [placeholder]="getPlace('username')">
             </mat-form-field>
             <mat-form-field [ngClass]="oneCol ? 'centered' : 'odd'">
                 <mat-label for="password">Inserisci password</mat-label>
-                <input matInput id="password" [type]="'password'" formControlName="password" required>
+                <input matInput id="password" [type]="'password'" formControlName="password">
             </mat-form-field>
             <br>
             <mat-form-field [ngClass]="oneCol ? 'centered' : ''">
                 <mat-label for="paymentmethod">Inserisci metodo di pagamento</mat-label>
-                <mat-select id="paymeth" formControlName="paymentmethod" required>
+                <mat-select id="paymeth" formControlName="paymentmethod">
                     <mat-option value="PayPal">PayPal</mat-option>
                     <mat-option value="Visa">Visa</mat-option>
                     <mat-option value="Mastercard">Mastercard</mat-option>
@@ -35,10 +50,10 @@
             </mat-form-field>
                 <mat-form-field id="resfield" [ngClass]="oneCol ? 'centered' : 'odd'">
                     <mat-label for="residence">Inserisci residenza</mat-label>
-                    <input matInput id="residence" placeholder= "Milano (MI)" [type]="'text'" formControlName="residence">
+                    <input matInput id="residence" placeholder= "Milano (MI)" [type]="'text'" formControlName="residence" [placeholder]="getPlace('residence')">
                 </mat-form-field>
-                <p class="danger" *ngIf="wrong">Campi non compilati correttamente.</p>
-        <p class="succeded" *ngIf="patched">Dati modificati correttamente</p>
+                <p class="danger" *ngIf="wrong" [ngClass]="oneCol ? 'centered' : ''">Username già in uso.</p>
+        <p class="succeded" *ngIf="patched" [ngClass]="oneCol ? 'centered' : ''">Dati modificati correttamente</p>
                 <div id="buttons" [ngClass]="oneCol ? 'centered' : ''">
                     <button mat-raised-button color="primary" type="submit" id="submitbutton">Modifica Profilo</button>
                     <button mat-raised-button color="white" type="button" routerLink="/" id="undobutton">Annulla</button>

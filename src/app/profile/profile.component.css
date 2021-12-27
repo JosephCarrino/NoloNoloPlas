@@ -28,6 +28,7 @@ form {
 }
 
 #lastile{
+    min-width: 100px;
     width: 1000px;
 }
 
@@ -49,11 +50,13 @@ mat-grid-list{
 }
 
 #proimgdiv{
+    min-width: 100px;
     resize: none;
     margin-right: 50px;
 }
 
 #proimg{
+    min-width: 100px;
     resize: none;
     margin-right: 50px;
     border-radius: 50%;
@@ -64,4 +67,17 @@ mat-grid-list{
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+}
+
+mat-card-header{
+    display: flex;
+    justify-content:space-between;
+}
+
+.propicimage{
+    display: flex;
+    justify-content: flex-end;
+    border-radius: 50%;
+    border: 1px solid #f7f7f7;
+    margin: 10px;
 }

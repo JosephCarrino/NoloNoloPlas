@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 
 const uiModules = [
   MatSidenavModule,
@@ -20,7 +21,8 @@ const uiModules = [
   MatInputModule,
   MatProgressSpinnerModule,
   MatSelectModule,
-  MatGridListModule
+  MatGridListModule,
+  MatCardModule
 ]
 
 @NgModule({

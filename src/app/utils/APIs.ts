@@ -5,9 +5,11 @@ const baseUrl = 'https://site202129.tw.cs.unibo.it/';
 const logUrl = baseUrl + 'api/auth/login/users';
 const getUserUrl = baseUrl + 'api/users/';
 const patchUserUrl = baseUrl + 'api/users/';
+const getArticleUrl = baseUrl + 'api/articles/';
+
 
 const standardHeaders = {
-    'Content-Type': 'text/plain',
+    'Content-Type': 'application/x-www-form-urlencoded',
     'mode': 'cors'
 };
 
@@ -43,9 +45,7 @@ export async function getUserInfo(id: string){
 
 export async function patchUser(id: string, patched: any){
     try{
-        console.log(patched);
         const response = await axios.patch(patchUserUrl + id, patched, { headers: {...advancedHeaders}});
-        console.log(response);
         if(response.status === 200)
             return true;
         else
@@ -54,5 +54,30 @@ export async function patchUser(id: string, patched: any){
         return false;
     }
 }
+
+export async function getRentals(id: string){
+    try{
+        const response = await axios.get(patchUserUrl + id + "/rentals", { headers: {...advancedHeaders} });
+        if(response.status === 200)
+            return response;
+        else
+            return false;
+    } catch (err: any){
+        return false;
+    }
+}
+
+export async function getArticle(id: string){
+    try{
+        const response = await axios.get(getArticleUrl + id, { headers: {...advancedHeaders} });
+        if(response.status === 200)
+            return response;
+        else
+            return false;
+    } catch (err: any){
+        return false;
+    }
+}
+
 
 export { login };
