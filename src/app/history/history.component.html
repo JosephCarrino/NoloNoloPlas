@@ -1,3 +1,4 @@
+<div [ngClass]="oneCol ? '' : 'row container'">
 <mat-card *ngFor="let rental of myRentals " class="rental">
     <mat-card-title-group>
         <mat-card-title>{{rental.myItem.name}}</mat-card-title>
@@ -15,3 +16,4 @@
             <button mat-button type="button" routerLink="/rental/{{rental._id}}">MODIFICA</button>
         </mat-card-actions>
 </mat-card>
+</div>

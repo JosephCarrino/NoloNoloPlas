@@ -1,6 +1,7 @@
 .rental{
     background-color: #f7f7f7;
     max-width: 300px;
+    margin-top: 20px;
 }
 
 .imgrent{
@@ -8,4 +9,10 @@
    /*border-radius: 90  %;*/
    mix-blend-mode: multiply;
 
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-gap: 20px;
 }

@@ -6,7 +6,10 @@ import { getRentals, getArticle } from '../utils/APIs';
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
-  styleUrls: ['./history.component.css']
+  styleUrls: ['./history.component.css'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class HistoryComponent implements OnInit {
 
@@ -19,10 +22,18 @@ export class HistoryComponent implements OnInit {
     'ended': 'Terminato.'
   }
 
+  public oneCol: boolean = false;
+
   public myRentals: any;
   async ngOnInit(): Promise<void> {
+    this.oneCol = (window.innerWidth <= 930) ? true : false;
     await this.refillRentals();
   }
+
+  onResize(event: any) {
+    this.oneCol = (window.innerWidth <= 930) ? true : false;
+  }
+
 
   async refillRentals(){
     let res: any = await getRentals(getUserId());
