@@ -6,6 +6,8 @@ const logUrl = baseUrl + 'api/auth/login/users';
 const getUserUrl = baseUrl + 'api/users/';
 const patchUserUrl = baseUrl + 'api/users/';
 const getArticleUrl = baseUrl + 'api/articles/';
+const getPaymentUrl = baseUrl + 'api/paymentMethods/';
+const getRentalUrl = baseUrl + 'api/rentals/';
 
 
 const standardHeaders = {
@@ -57,7 +59,26 @@ export async function getUserInfo(id: string){
 
 export async function patchUser(id: string, patched: any){
     try{
+        for(let value of patched.entries()){
+            console.log(value);
+          }
         const response = await axios.patch(patchUserUrl + id, patched, { headers: {...advancedHeaders}});
+        if(response.status === 200)
+            return true;
+        else
+            return false;
+    } catch (err: any){
+        return false;
+    }
+}
+
+
+export async function patchRental(id: string, patched: any){
+    try{
+        for(let value of patched.entries()){
+            console.log(value);
+          }
+        const response = await axios.patch(getRentalUrl + id, patched, { headers: {...advancedHeaders}});
         if(response.status === 200)
             return true;
         else
@@ -88,6 +109,30 @@ export async function getArticle(id: string){
             return false;
     } catch (err: any){
         return false;
+    }
+}
+
+export async function getPayment(){
+    try{
+        const response = await axios.get(getPaymentUrl, { data: {standardHeaders} })
+        if(response.status === 200)
+            return response.data;
+        else
+            return false;
+    } catch (err: any){
+        return false;
+    }
+}
+
+export async function getRental(id: string){
+    try{
+        const response = await axios.get(getRentalUrl + id, {headers: {...advancedHeaders} });
+        if(response.status === 200)
+            return response;
+        else
+            return undefined;
+    } catch (err: any){
+        return undefined;
     }
 }
 

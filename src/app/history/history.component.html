@@ -1,18 +1,17 @@
-<div *ngFor="let rental of myRentals " class="rental">
-    <div class="article">{{ rental.myItem.name }}</div>
-    <br>
-    <div class="rental"><p>
-        {{ rental.date_start}}
-    </p>
-        <p>
-            {{ rental.date_end}}
-        </p>
-        <p>
-            {{ rental.state}}
-        </p>
-        <p>
-            {{ rental.estimated}}
-        </p>
-    </div>
-    
-</div>
+<mat-card *ngFor="let rental of myRentals " class="rental">
+    <mat-card-title-group>
+        <mat-card-title>{{rental.myItem.name}}</mat-card-title>
+        <mat-card-subtitle>{{rental.myItem.superCategory}}</mat-card-subtitle>
+        <img alt="{{rental.myItem.name}} image" class="imgrent" mat-card-md-image src={{rental.myItem.img}}>
+    </mat-card-title-group>
+        <mat-card-content>
+            <p><b>Data di Inizio: </b>{{rental.date_start}}</p>
+            <p><b>Data di Fine: </b>{{rental.date_end}}</p>
+            <p><b>Stato del Noleggio: </b>{{rental.state}}</p>
+            <h3><b>Costo: €{{rental.estimated}}</b></h3>
+        </mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions>
+            <button mat-button type="button" routerLink="/rental/{{rental._id}}">MODIFICA</button>
+        </mat-card-actions>
+</mat-card>

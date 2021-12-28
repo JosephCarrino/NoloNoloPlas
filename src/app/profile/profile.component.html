@@ -44,10 +44,7 @@
             <mat-form-field [ngClass]="oneCol ? 'centered' : ''">
                 <mat-label for="paymentmethod">Inserisci metodo di pagamento</mat-label>
                 <mat-select id="paymeth" formControlName="paymentmethod">
-                    <mat-option value="PayPal">PayPal</mat-option>
-                    <mat-option value="Visa">Visa</mat-option>
-                    <mat-option value="Mastercard">Mastercard</mat-option>
-                    <mat-option value="Hype">Hype</mat-option>
+                    <mat-option *ngFor="let pay of payments" value={{pay.name}}>{{pay.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
                 <mat-form-field id="resfield" [ngClass]="oneCol ? 'centered' : 'odd'">

@@ -9,3 +9,7 @@
    mix-blend-mode: multiply;
 
 }
+
+.centered{
+    margin: auto;
+}

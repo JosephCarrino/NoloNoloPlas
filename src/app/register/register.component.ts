@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { register } from '../utils/APIs';
+import { register, getPayment } from '../utils/APIs';
 import { Router } from '@angular/router'
 
 
@@ -14,12 +14,14 @@ export class RegisterComponent implements OnInit {
   public wrong: boolean = false;
   public inProgress: boolean = false;
   public registered: boolean = false;
+  public payments: any = [];
 
   hide = true;
 
   constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
+    this.refillPayment();
   }
 
   regForm = this.formBuilder.group({
@@ -31,6 +33,13 @@ export class RegisterComponent implements OnInit {
     residence:  '',
     avatar: ''
   })
+
+
+  async refillPayment(): Promise<void> {
+    let res: any = await getPayment();
+    this.payments = res;
+  }
+  
 
   onFileChange(event:any) {
 

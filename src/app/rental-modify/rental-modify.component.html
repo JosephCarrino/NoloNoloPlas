@@ -1,0 +1,35 @@
+<mat-card *ngFor="let rental of myRentals " class="rental">
+    <mat-card-title-group>
+        <mat-card-title>{{rental.myItem.name}}</mat-card-title>
+        <mat-card-subtitle>{{rental.myItem.superCategory}}</mat-card-subtitle>
+        <img alt="{{rental.myItem.name}} image" class="imgrent" mat-card-md-image src={{rental.myItem.img}}>
+    </mat-card-title-group>
+    <form id="regform" [formGroup]="rentForm" #formDir="ngForm" (ngSubmit)="sendPatch()">
+        <mat-card-content>
+            <br>
+            <mat-form-field>
+                <mat-label>Data di Inizio</mat-label>
+                <input matInput [matDatepicker]="start" formControlName="date_start">
+                <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                <mat-datepicker #start></mat-datepicker>
+              </mat-form-field>
+              
+              <mat-form-field>
+                <mat-label>Data di Fine</mat-label>
+                <input matInput [matDatepicker]="end" formControlName="date_end">
+                <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                <mat-datepicker #end></mat-datepicker>
+              </mat-form-field>
+              <br>
+            <p><b>Stato del Noleggio: </b>{{rental.state}}</p>
+            <h3><b>Costo: €{{rental.estimated}}</b></h3>
+        </mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions>
+            <button mat-button type="submit">INVIA</button>
+        </mat-card-actions>
+        <p class="danger" *ngIf="wrong" class="centered">Username già in uso.</p>
+                <p class="succeded" *ngIf="patched" class="centered">Dati modificati correttamente</p>
+        <mat-spinner *ngIf="inProgress" class="centered"></mat-spinner>
+    </form>
+</mat-card>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { getUserId } from '../utils/auth';
-import { getUserInfo, patchUser } from '../utils/APIs';
+import { getUserInfo, patchUser, getPayment } from '../utils/APIs';
 
 interface Tile {
   color: string;
@@ -17,8 +17,8 @@ interface Tile {
 })
 export class ProfileComponent implements OnInit {
 
-
-  public imageUrl: string = 'https://site202129.tw.cs.unibo.it/img/customersAvatar/'
+  public payments: any = [];
+  public imageUrl: string = 'https://site202129.tw.cs.unibo.it/img/customersAvatar/';
   public wrong: boolean = false;
   public inProgress: boolean = false;
   public patched: boolean = false;
@@ -57,6 +57,7 @@ export class ProfileComponent implements OnInit {
     this.notBreakpoint = (window.innerWidth <= 660) ? 3 : 1;
     this.imgWidth = (window.innerWidth <= 660) ? 50 : 100;
     this.oneCol = (window.innerWidth <= 930) ? true : false;
+    this.refillPayment();
     this.refillForm();
   }
 
@@ -74,13 +75,17 @@ export class ProfileComponent implements OnInit {
 
   async refillForm(): Promise<void> {
     let res: any = await getUserInfo(getUserId());
-    this.imageUrl+= res.data.avatar;
+    this.imageUrl+= (res.data.avatar != "") ? res.data.avatar : "/defaultCustomer.jpg";
     res.data.avatar = "";
     this.retrievedForm = this.formBuilder.group(res.data);
     res.data.password = "";
     this.patchForm = this.formBuilder.group(res.data);
     this.patchForm.value['password'] = "";
-    console.log(res.data);
+  }
+
+  async refillPayment(): Promise<void> {
+    let res: any = await getPayment();
+    this.payments = res;
   }
 
   onFileChange(event:any) {
@@ -107,6 +112,7 @@ export class ProfileComponent implements OnInit {
         toSend.append(field, this.patchForm.value[field]);
       }
     }
+
     let res: boolean = await patchUser(getUserId(), toSend);
     this.inProgress = false;
     this.wrong = !res;

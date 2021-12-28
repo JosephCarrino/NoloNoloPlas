@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppUiModule } from './app-ui.module';
 
+import { DatePipe } from '@angular/common'
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NotLoggedGuardService } from './not-logged-guard.service';
 import { HistoryComponent } from './history/history.component';
+import { RentalModifyComponent } from './rental-modify/rental-modify.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,8 @@ import { HistoryComponent } from './history/history.component';
     RegisterComponent,
     LoginComponent,
     ProfileComponent,
-    HistoryComponent
+    HistoryComponent,
+    RentalModifyComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +32,7 @@ import { HistoryComponent } from './history/history.component';
     BrowserAnimationsModule,
     AppUiModule
   ],
-  providers: [NotLoggedGuardService],
+  providers: [NotLoggedGuardService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
