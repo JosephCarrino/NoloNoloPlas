@@ -1,0 +1,67 @@
+<h1><b>I nostri Articoli</b></h1>
+
+<form id="queriesForm" [formGroup]="queriesForm" #formDir="ngForm">
+    <section class="example-section">
+        <h3>Filtri disponibili</h3>
+        <span class="example-list-section">
+        <div [ngClass]="(oneCol) ? '.states2' : '.states'">
+        <h4>Stato articolo</h4>
+        <ul [ngClass]="(oneCol) ? '' : 'checkRow'">
+            <li *ngFor="let subtask of task.subtasks">
+            <mat-checkbox matInput [formControlName]="subtask.value" [(ngModel)]="subtask.completed"
+                            [color]="subtask.color"
+                            (change)="filterByState()">
+                {{subtask.name}}
+            </mat-checkbox>
+            </li>
+        </ul>
+    </div>
+        </span>
+    </section>
+    <br>
+    <section>
+        <h4>Ordinamento</h4>
+        <mat-form-field [ngClass]="oneCol ? '' : ''">
+            <mat-label for="sortBy">Ordina per:</mat-label>
+            <mat-select matInput id="sortingSelect" formControlName="sortBy" (selectionChange)="sortByPrice()">
+                <mat-option value="higherPrice">Prezzo discendente</mat-option>
+                <mat-option value="lowerPrice">Prezzo ascendente</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </section>
+</form>
+<!--<section class="example-section">
+    <span class="example-list-section">
+    <div [ngClass]="(oneCol) ? '.states2' : '.states'">
+    <h4>Categoria articolo</h4>
+    <ul [ngClass]="(oneCol) ? '' : 'checkRowCate'">
+        <li *ngFor="let subtask of categories.subtasks" [attr.id]="subtask.name">
+        <mat-checkbox matInput [(ngModel)]="subtask.completed"
+                        [color]="subtask.color"
+                        (change)="filterByCategory()">
+            {{subtask.name}}
+        </mat-checkbox>
+        </li>
+    </ul>
+</div>
+    </span>
+</section>-->
+
+<div [ngClass]="oneCol ? '' : 'row container'">
+    <mat-card *ngFor="let article of myArticlesFiltered" class="article">
+        <mat-card-title-group [ngClass]="(article.state == 'broken') ? 'broken' : ''">
+            <mat-card-title>{{article.name}}</mat-card-title>
+            <mat-card-subtitle>{{article.superCategory}}</mat-card-subtitle>
+            <img alt="{{article.name}} image" class="imgrent" mat-card-md-image src={{article.img}}>
+        </mat-card-title-group>
+            <mat-card-content>
+                <p><b>Categoria: </b>{{article.category}}</p>
+                <p><b>Stato dell'oggetto: </b><span [ngClass]="(article.state == 'broken') ? 'red' : ''">{{article.translated}}</span></p>
+                <h3><b>Costo al giorno massimo: €{{article.price}}</b></h3>
+            </mat-card-content>
+            <mat-divider inset *ngIf="!(article.state == 'broken')"></mat-divider>
+            <mat-card-actions>
+                <button *ngIf="!(article.state == 'broken')" mat-button type="button">NOLEGGIA</button>
+            </mat-card-actions>
+    </mat-card>
+</div>

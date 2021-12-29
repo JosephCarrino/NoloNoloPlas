@@ -16,6 +16,7 @@ import { NotLoggedGuardService } from './not-logged-guard.service';
 import { HistoryComponent } from './history/history.component';
 import { RentalModifyComponent } from './rental-modify/rental-modify.component';
 import { StartedRentalGuardService } from './started-rental-guard.service';
+import { ArticlesComponent } from './articles/articles.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { StartedRentalGuardService } from './started-rental-guard.service';
     LoginComponent,
     ProfileComponent,
     HistoryComponent,
-    RentalModifyComponent
+    RentalModifyComponent,
+    ArticlesComponent
   ],
   imports: [
     BrowserModule,

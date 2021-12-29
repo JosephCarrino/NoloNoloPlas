@@ -7,8 +7,10 @@ import { NotLoggedGuardService } from './not-logged-guard.service';
 import { HistoryComponent } from './history/history.component';
 import { RentalModifyComponent } from './rental-modify/rental-modify.component';
 import { StartedRentalGuardService } from './started-rental-guard.service';
+import { ArticlesComponent } from './articles/articles.component';
 
 const routes: Routes = [
+  { path: 'articles', component: ArticlesComponent, canActivate: [NotLoggedGuardService] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [NotLoggedGuardService] },

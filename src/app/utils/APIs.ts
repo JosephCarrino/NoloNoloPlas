@@ -8,7 +8,6 @@ const patchUserUrl = baseUrl + 'api/users/';
 const getArticleUrl = baseUrl + 'api/articles/';
 const getPaymentUrl = baseUrl + 'api/paymentMethods/';
 const getRentalUrl = baseUrl + 'api/rentals/';
-const checkAvailUrl = baseUrl + 'api/articles/';
 
 
 const standardHeaders = {
@@ -153,11 +152,24 @@ export async function getRental(id: string){
 
 export async function checkAvailability(id: string, date_start: string, date_end: string){
     try{
-        const response = await axios.get(checkAvailUrl + id + '/available?start=' + date_start + '&end=' + date_end, {headers: {...advancedHeaders} });
+        const response = await axios.get(getArticleUrl + id + '/available?start=' + date_start + '&end=' + date_end, {headers: {...advancedHeaders} });
         if(response.status === 200)
             return response.data.available;
         else
             return false;
+    } catch (err:any){
+        console.log(err);
+        return false;
+    }
+}
+
+export async function getArticles(){
+    try{
+        const response = await axios.get(getArticleUrl, {headers: {...advancedHeaders}});
+        if(response.status === 200)
+            return response.data;
+        else
+            return undefined;
     } catch (err:any){
         console.log(err);
         return false;
