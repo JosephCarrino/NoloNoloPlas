@@ -59,9 +59,6 @@ export async function getUserInfo(id: string){
 
 export async function patchUser(id: string, patched: any){
     try{
-        for(let value of patched.entries()){
-            console.log(value);
-          }
         const response = await axios.patch(patchUserUrl + id, patched, { headers: {...advancedHeaders, }});
         if(response.status === 200)
             return true;
@@ -150,11 +147,14 @@ export async function getRental(id: string){
     }
 }
 
-export async function checkAvailability(id: string, date_start: string, date_end: string){
+export async function checkAvailability(id: string, date_start: string, date_end: string, all: boolean= false){
     try{
         const response = await axios.get(getArticleUrl + id + '/available?start=' + date_start + '&end=' + date_end, {headers: {...advancedHeaders} });
         if(response.status === 200)
-            return response.data.available;
+            if(all)
+                return response.data;
+            else
+                return response.data.available;
         else
             return false;
     } catch (err:any){
@@ -170,6 +170,19 @@ export async function getArticles(){
             return response.data;
         else
             return undefined;
+    } catch (err:any){
+        console.log(err);
+        return false;
+    }
+}
+
+export async function createRental(body: any){
+    try{
+        const response = await axios.post(getRentalUrl, body, {headers: {...advancedHeaders}});
+        if(response.status === 200)
+            return true;
+        else
+            return false;
     } catch (err:any){
         console.log(err);
         return false;

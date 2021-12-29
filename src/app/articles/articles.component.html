@@ -63,20 +63,5 @@
 </form>
 
 <div [ngClass]="oneCol ? '' : 'row container'">
-    <mat-card *ngFor="let article of myArticlesFiltered" class="article">
-        <mat-card-title-group [ngClass]="(article.state == 'broken') ? 'broken' : ''">
-            <mat-card-title>{{article.name}}</mat-card-title>
-            <mat-card-subtitle>{{article.superCategory}}</mat-card-subtitle>
-            <img alt="{{article.name}} image" class="imgrent" mat-card-md-image src={{article.img}}>
-        </mat-card-title-group>
-            <mat-card-content>
-                <p><b>Categoria: </b>{{article.category}}</p>
-                <p><b>Stato dell'oggetto: </b><span [ngClass]="(article.state == 'broken') ? 'red' : ''">{{article.translated}}</span></p>
-                <h3><b>Costo al giorno massimo: €{{article.price}}</b></h3>
-            </mat-card-content>
-            <mat-divider inset *ngIf="!(article.state == 'broken')"></mat-divider>
-            <mat-card-actions>
-                <button *ngIf="!(article.state == 'broken')" mat-button type="button" routerLink="/rental/{{article._id}}">NOLEGGIA</button>
-            </mat-card-actions>
-    </mat-card>
+   <app-article-card *ngFor="let article of myArticlesFiltered" [article]="article"></app-article-card>
 </div>

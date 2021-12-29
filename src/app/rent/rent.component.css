@@ -1,0 +1,16 @@
+*{
+    background-color:#f2f2f2;
+}
+
+mat-stepper{
+    max-width: 500px;
+    margin: auto;
+}
+
+mat-form-field{
+    margin-right: 10px;
+}
+
+.red{
+    color: red;
+}

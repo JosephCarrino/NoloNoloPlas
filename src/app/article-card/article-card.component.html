@@ -1,0 +1,20 @@
+<mat-card class="article">
+    <mat-card-title-group [ngClass]="(article.state == 'broken') ? 'broken' : ''">
+        <mat-card-title>{{article.name}}</mat-card-title>
+        <mat-card-subtitle>{{article.superCategory}}</mat-card-subtitle>
+        <img alt="{{article.name}} image" class="imgrent" mat-card-md-image src={{article.img}}>
+    </mat-card-title-group>
+        <mat-card-content>
+            <p><b>Categoria: </b>{{article.category}}</p>
+            <p><b>Stato dell'oggetto: </b><span [ngClass]="(article.state == 'broken') ? 'red' : ''">{{article.translated}}</span></p>
+            <h3 *ngIf="!(article.final)"><b>Costo al giorno massimo: €{{article.price}}</b></h3>
+            <span *ngIf="article.start"><p><b>Data di inizio:   {{article.start}}</b></p></span>
+            <span *ngIf="article.end"><p><b>Data di fine:   {{article.end}}</b></p></span>
+            <div *ngIf="article.discounts"><span *ngIf="article.discounts.length != 0"><h3 class="red" *ngFor="let discount of article.discounts">{{discount}}</h3></span></div>
+            <span *ngIf="article.final"><h4><b>Prezzo finale:   €{{article.final}}</b></h4></span>
+        </mat-card-content>
+        <mat-divider inset *ngIf="!(article.state == 'broken') && !newPage"></mat-divider>
+        <mat-card-actions>
+            <button *ngIf="!(article.state == 'broken') && !newPage" mat-button type="button" routerLink="/rental/{{article._id}}">NOLEGGIA</button>
+    </mat-card-actions>
+</mat-card>

@@ -19,6 +19,7 @@ import { StartedRentalGuardService } from './started-rental-guard.service';
 import { ArticlesComponent } from './articles/articles.component';
 import { RentComponent } from './rent/rent.component';
 import { AvailableArticleGuardService } from './available-article-guard.service';
+import { ArticleCardComponent } from './article-card/article-card.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AvailableArticleGuardService } from './available-article-guard.service'
     HistoryComponent,
     RentalModifyComponent,
     ArticlesComponent,
-    RentComponent
+    RentComponent,
+    ArticleCardComponent
   ],
   imports: [
     BrowserModule,

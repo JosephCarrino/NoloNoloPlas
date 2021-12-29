@@ -1,1 +1,43 @@
-<p>rent works!</p>
+<mat-stepper linear=true #stepper orientation="vertical" (selectionChange)="newMove($event)">
+    <mat-step [stepControl]="dateForm" label="Inserisci date di noleggio">
+        <ng-container *ngIf="myArticle"><app-article-card [article]="myArticle" [newPage]="true"></app-article-card></ng-container>
+        <br><br>
+      <form [formGroup]="dateForm">
+        <mat-form-field>
+            <mat-label>Data di Inizio</mat-label>
+            <input matInput [matDatepicker]="start" formControlName="date_start" required>
+            <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+            <mat-datepicker #start></mat-datepicker>
+          </mat-form-field>
+          
+          <mat-form-field>
+            <mat-label>Data di Fine</mat-label>
+            <input matInput [matDatepicker]="end" formControlName="date_end" required>
+            <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+            <mat-datepicker #end></mat-datepicker>
+          </mat-form-field>
+          <div>
+          <button mat-button matStepperNext (click)="checkDates()">Conferma</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="avalForm" label="Riepilogo Ordine">
+      <form>
+        <div>
+            <ng-container *ngIf="newArticle && !notAvailable"><app-article-card [article]="newArticle" [newPage]="true"></app-article-card></ng-container>
+            <br>
+        <h4 *ngIf="notAvailable"><b>Articolo non disponibile nelle date scelte!</b></h4>
+          <button mat-button matStepperPrevious>Indietro</button>
+          <button *ngIf="!notAvailable" mat-button matStepperNext>Conferma</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Noleggio effettuato</ng-template>
+      <h4 *ngIf="rentalCreated"><b>Noleggio effettuato con successo.</b></h4>
+      <h4 class="red" *ngIf="!rentalCreated"><b>Errore. Noleggio non effettuato.</b></h4>
+      <div>
+        <button mat-button routerLink="/articles/">Fatto</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
