@@ -1,7 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { getUserId } from '../utils/auth';
 import { getRentals, getArticle } from '../utils/APIs';
+import { Router, NavigationStart } from '@angular/router';
+import * as myGlobals from '../globals';
+import {ThemePalette} from '@angular/material/core';
+import { FormBuilder } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
+
+export interface Task {
+  name: string;
+  completed: boolean;
+  color: ThemePalette;
+  subtasks?: Task[];
+  value: string;
+}
 
 @Component({
   selector: 'app-history',
@@ -13,7 +26,7 @@ import { getRentals, getArticle } from '../utils/APIs';
 })
 export class HistoryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private formBuilder: FormBuilder, private datePipe: DatePipe) { }
 
   stateDict: any = { 
     'pending': 'In attesa di approvazione.', 
@@ -23,20 +36,40 @@ export class HistoryComponent implements OnInit {
   }
 
   public oneCol: boolean = false;
-
+  public wrong: boolean = false;
   public myRentals: any;
   async ngOnInit(): Promise<void> {
     this.oneCol = (window.innerWidth <= 930) ? true : false;
-    await this.refillRentals();
+    await this.refillRentals({});
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart){
+        let myid= event.url.split('/');
+        let mystate: string= ''; 
+        for(let rental of this.myRentals){
+          if(rental._id == myid[myid.length - 1]){
+            mystate= rental.state;
+          }
+        }
+        myGlobals.setState(mystate);       
+      }
+    })
   }
 
   onResize(event: any) {
     this.oneCol = (window.innerWidth <= 930) ? true : false;
   }
 
+  queriesForm = this.formBuilder.group({
+    pending: true,
+    approved: true,
+    started: true,
+    ended: true,
+    date_start: '',
+    date_end: ''
+  })
 
-  async refillRentals(){
-    let res: any = await getRentals(getUserId());
+  async refillRentals(queries: any){
+    let res: any = await getRentals(getUserId(), queries);
     const moRent = res.data;
     for(let rental of moRent){
       rental.myItem = await getArticle(rental.object_id);
@@ -71,5 +104,83 @@ export class HistoryComponent implements OnInit {
         return(rental.modState);
       }
     }
+  }
+
+  task: Task = {
+    name: 'Tutti gli stati',
+    value: 'all',
+    completed: true,
+    color: 'primary',
+    subtasks: [
+      {name: 'In attesa di approvazione', value: 'pending', completed: true, color: 'primary'},
+      {name: 'Approvati', value: 'approved', completed: true, color: 'accent'},
+      {name: 'Iniziati', value: 'started', completed: true, color: 'warn'},
+      {name: 'Conclusi', value: 'ended', completed: true, color: 'accent'},
+    ],
+  };
+
+  allComplete: boolean = true;
+
+  updateAllComplete() {
+    this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
+  }
+
+  someComplete(): boolean {
+    if (this.task.subtasks == null) {
+      return false;
+    }
+    return this.task.subtasks.filter(t => t.completed).length > 0 && !this.allComplete;
+  }
+
+  setAll(completed: boolean) {
+    this.allComplete = completed;
+    if (this.task.subtasks == null) {
+      return;
+    }
+    this.task.subtasks.forEach(t => (t.completed = completed));
+  }
+
+  public onSubmitQuery(){
+    let toSend: any = {}
+    let all: boolean = true;
+    for(let field in this.queriesForm.value){
+      if(field == "pending" || field == "approved" || field == "started" || field == "ended")
+        if(!this.queriesForm.value[field])
+          all= false;
+    }
+    for(let field in this.queriesForm.value){
+      if(this.queriesForm.value[field]){
+        if((field == "pending" || field == "approved" || field == "started" || field == "ended")){
+          if(!all)
+            toSend[field] = this.queriesForm.value[field];
+        } else {
+          toSend[field] = this.queriesForm.value[field];
+        }
+      }
+    }
+    let newToSend: any = {}
+      newToSend.state = '';
+      for(let state in toSend){
+        if(state != "date_start" && state != "date_end"){
+          newToSend.state+= state + ','
+        }
+        else{
+          let tmp: any = new Date();
+          tmp = this.datePipe.transform(toSend[state], 'YYYY-MM-dd'); 
+          newToSend[state]= tmp.toString();
+        }
+    }
+    if(newToSend.state != '')
+      newToSend.state = newToSend.state.slice(0, newToSend.state.length-1)
+    if(newToSend.date_start && newToSend.date_end)
+      if(Date.parse(newToSend.date_end) > Date.parse(newToSend.date_start)){
+        this.wrong= false;
+        this.refillRentals(newToSend);
+      }
+      else{
+        this.wrong= true;
+      }
+    else
+      this.refillRentals(newToSend);
   }
 }

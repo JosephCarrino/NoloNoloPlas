@@ -6,13 +6,14 @@ import { ProfileComponent } from './profile/profile.component';
 import { NotLoggedGuardService } from './not-logged-guard.service';
 import { HistoryComponent } from './history/history.component';
 import { RentalModifyComponent } from './rental-modify/rental-modify.component';
+import { StartedRentalGuardService } from './started-rental-guard.service';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [NotLoggedGuardService] },
   { path: 'history', component: HistoryComponent, canActivate: [NotLoggedGuardService] },
-  { path: 'rental/:id', component: RentalModifyComponent, canActivate: [NotLoggedGuardService] }
+  { path: 'rental/:id', component: RentalModifyComponent, canActivate: [StartedRentalGuardService] }
 ];
 
 @NgModule({

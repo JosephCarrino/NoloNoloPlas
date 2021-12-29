@@ -8,10 +8,11 @@ const patchUserUrl = baseUrl + 'api/users/';
 const getArticleUrl = baseUrl + 'api/articles/';
 const getPaymentUrl = baseUrl + 'api/paymentMethods/';
 const getRentalUrl = baseUrl + 'api/rentals/';
+const checkAvailUrl = baseUrl + 'api/articles/';
 
 
 const standardHeaders = {
-    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Type': 'application/json',
     'mode': 'cors'
 };
 
@@ -62,7 +63,7 @@ export async function patchUser(id: string, patched: any){
         for(let value of patched.entries()){
             console.log(value);
           }
-        const response = await axios.patch(patchUserUrl + id, patched, { headers: {...advancedHeaders}});
+        const response = await axios.patch(patchUserUrl + id, patched, { headers: {...advancedHeaders, }});
         if(response.status === 200)
             return true;
         else
@@ -75,9 +76,6 @@ export async function patchUser(id: string, patched: any){
 
 export async function patchRental(id: string, patched: any){
     try{
-        for(let value of patched.entries()){
-            console.log(value);
-          }
         const response = await axios.patch(getRentalUrl + id, patched, { headers: {...advancedHeaders}});
         if(response.status === 200)
             return true;
@@ -88,9 +86,26 @@ export async function patchRental(id: string, patched: any){
     }
 }
 
-export async function getRentals(id: string){
+export async function getRentals(id: string, queries: any){
     try{
-        const response = await axios.get(patchUserUrl + id + "/rentals", { headers: {...advancedHeaders} });
+        let url = patchUserUrl + id + "/rentals";
+        let first= 0;
+        if(queries){
+            for(let field in queries){
+                if(field == 'date_start')
+                    first= 0;
+                else if(field == 'date_end')
+                    first= 1;
+                else if(field == 'state')
+                    first= 2;
+            }
+            url+='?';
+            if(queries.date_start) (first == 0) ? url+= 'date_start=' + queries.date_start : url+= '&date_start=' + queries.date_start ;
+            if(queries.date_end) (first == 1) ? url+= 'date_end=' + queries.date_end : url+= '&end=' + queries.date_end;
+            if(queries.state) (first ==  2) ?  url+='state=' + queries.state : url+='&state=' + queries.state;
+            console.log(url);
+        }
+        const response = await axios.get(url, { headers: {...advancedHeaders} });
         if(response.status === 200)
             return response;
         else
@@ -136,5 +151,17 @@ export async function getRental(id: string){
     }
 }
 
+export async function checkAvailability(id: string, date_start: string, date_end: string){
+    try{
+        const response = await axios.get(checkAvailUrl + id + '/available?start=' + date_start + '&end=' + date_end, {headers: {...advancedHeaders} });
+        if(response.status === 200)
+            return response.data.available;
+        else
+            return false;
+    } catch (err:any){
+        console.log(err);
+        return false;
+    }
+}
 
 export { login };

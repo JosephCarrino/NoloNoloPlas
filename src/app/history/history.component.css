@@ -16,3 +16,24 @@
     grid-template-columns: repeat(3, auto);
     grid-gap: 20px;
 }
+
+body{
+    overflow: hidden;
+}
+
+.example-section {
+    margin: auto;
+  }
+  
+  .example-margin {
+    margin: 0 12px;
+  }
+  
+  ul {
+    list-style-type: none;
+    margin-top: 4px;
+  }
+  
+  #queriesForm > *{
+      margin: auto;
+  }

@@ -1,3 +1,45 @@
+
+<form id="queriesForm" [formGroup]="queriesForm" #formDir="ngForm" (ngSubmit)="onSubmitQuery()">
+    <section class="example-section">
+        <span class="example-list-section">
+        <mat-checkbox matInput class="example-margin"
+                        [checked]="allComplete"
+                        [color]="task.color"
+                        [indeterminate]="someComplete()"
+                        (change)="setAll($event.checked)">
+            {{task.name}}
+        </mat-checkbox>
+        </span>
+        <span class="example-list-section">
+        <ul>
+            <li *ngFor="let subtask of task.subtasks">
+            <mat-checkbox matInput [formControlName]="subtask.value" [(ngModel)]="subtask.completed"
+                            [color]="subtask.color"
+                            (ngModelChange)="updateAllComplete()">
+                {{subtask.name}}
+            </mat-checkbox>
+            </li>
+        </ul>
+        </span>
+    </section>
+    <mat-form-field>
+        <mat-label>Data di Inizio</mat-label>
+        <input matInput [matDatepicker]="start" formControlName="date_start">
+        <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+        <mat-datepicker #start></mat-datepicker>
+      </mat-form-field>
+      <br><br>
+      <mat-form-field>
+        <mat-label>Data di Fine</mat-label>
+        <input matInput [matDatepicker]="end" formControlName="date_end">
+        <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+        <mat-datepicker #end></mat-datepicker>
+      </mat-form-field>
+      <br><br>
+    <button mat-raised-button color="primary" type="submit" id="submitbutton">Filtra Noleggi</button>
+    <p *ngIf="this.wrong">Date non corrette</p>
+</form>
+
 <div [ngClass]="oneCol ? '' : 'row container'">
 <mat-card *ngFor="let rental of myRentals " class="rental">
     <mat-card-title-group>
@@ -9,10 +51,10 @@
             <p><b>Data di Inizio: </b>{{rental.date_start}}</p>
             <p><b>Data di Fine: </b>{{rental.date_end}}</p>
             <p><b>Stato del Noleggio: </b>{{rental.state}}</p>
-            <h3><b>Costo: €{{rental.estimated}}</b></h3>
+            <h3><b>Costo: €{{rental.estimated.price}}</b></h3>
         </mat-card-content>
-        <mat-divider inset></mat-divider>
-        <mat-card-actions>
+        <mat-divider inset *ngIf="((rental.state == 'In attesa di approvazione.') || (rental.state == 'Approvato'))"></mat-divider>
+        <mat-card-actions *ngIf="((rental.state == 'In attesa di approvazione.') || (rental.state == 'Approvato'))">
             <button mat-button type="button" routerLink="/rental/{{rental._id}}">MODIFICA</button>
         </mat-card-actions>
 </mat-card>

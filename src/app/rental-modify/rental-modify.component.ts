@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { getRental, getArticle, patchRental } from '../utils/APIs';
+import { getRental, getArticle, patchRental, checkAvailability } from '../utils/APIs';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { DatePipe } from '@angular/common'
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-rental-modify',
@@ -51,6 +51,7 @@ export class RentalModifyComponent implements OnInit {
 
   public async sendPatch(){
     this.inProgress = true;
+    let toGo: boolean= false;
     let toSend = new FormData();
     for(let field in this.rentForm.value) {
       if(this.rentForm.value[field] != ""){
@@ -62,12 +63,27 @@ export class RentalModifyComponent implements OnInit {
           let tmp: any = new Date();
           tmp = this.datepipe.transform(this.rentForm.value[field], 'YYYY-MM-dd'); 
           toSend.append(field, tmp);
+          toGo= true;
         }
       }
     }
-    
-    let res: boolean = await patchRental(this.myRentals[0]._id, toSend);
+    let res: boolean = false;
+    if(toGo){
+      toSend.append("state", "pending");
+      toSend.append("object_id", this.myRentals[0].object_id);
+      let newToSend: any = {}
+      for(let value of toSend.entries()){
+          newToSend[value[0]] = value[1];
+        }
+      let available = await checkAvailability(this.myRentals[0]._id, (newToSend.date_start) ? newToSend.date_start : this.myRentals[0].date_start, (newToSend.date_end) ? newToSend.date_end : this.myRentals[0].date_end);
+      console.log(newToSend);
+      if(available)
+        res = await patchRental(this.myRentals[0]._id, newToSend);
+      else
+        res= false;
+    }
     //const res: boolean= false;
+    console.log(res);
     this.inProgress = false;
     this.wrong = !res;
     this.patched = res;

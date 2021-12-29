@@ -15,6 +15,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { NotLoggedGuardService } from './not-logged-guard.service';
 import { HistoryComponent } from './history/history.component';
 import { RentalModifyComponent } from './rental-modify/rental-modify.component';
+import { StartedRentalGuardService } from './started-rental-guard.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { RentalModifyComponent } from './rental-modify/rental-modify.component';
     BrowserAnimationsModule,
     AppUiModule
   ],
-  providers: [NotLoggedGuardService, DatePipe],
+  providers: [NotLoggedGuardService, StartedRentalGuardService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

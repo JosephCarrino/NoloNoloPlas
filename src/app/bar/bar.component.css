@@ -41,6 +41,7 @@ header .app-title {
 .sidenav-container {
     background-color: #f2f2f2;
     flex: 1;
+    overflow-x: hidden;
 }
 
 .sidenav-container .sidenav {
@@ -82,3 +83,6 @@ header .app-title {
     padding: 2px;
 }
 
+* {
+    overflow-x: hidden;
+}
