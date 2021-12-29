@@ -8,6 +8,8 @@ import { HistoryComponent } from './history/history.component';
 import { RentalModifyComponent } from './rental-modify/rental-modify.component';
 import { StartedRentalGuardService } from './started-rental-guard.service';
 import { ArticlesComponent } from './articles/articles.component';
+import { RentComponent } from './rent/rent.component';
+import { AvailableArticleGuardService } from './available-article-guard.service';
 
 const routes: Routes = [
   { path: 'articles', component: ArticlesComponent, canActivate: [NotLoggedGuardService] },
@@ -15,7 +17,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [NotLoggedGuardService] },
   { path: 'history', component: HistoryComponent, canActivate: [NotLoggedGuardService] },
-  { path: 'rental/:id', component: RentalModifyComponent, canActivate: [StartedRentalGuardService] }
+  { path: 'modify/:id', component: RentalModifyComponent, canActivate: [StartedRentalGuardService] },
+  { path: 'rental/:id', component: RentComponent, canActivate: [AvailableArticleGuardService]}
 ];
 
 @NgModule({

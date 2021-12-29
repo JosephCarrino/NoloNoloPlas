@@ -55,7 +55,7 @@
         </mat-card-content>
         <mat-divider inset *ngIf="((rental.state == 'In attesa di approvazione.') || (rental.state == 'Approvato'))"></mat-divider>
         <mat-card-actions *ngIf="((rental.state == 'In attesa di approvazione.') || (rental.state == 'Approvato'))">
-            <button mat-button type="button" routerLink="/rental/{{rental._id}}">MODIFICA</button>
+            <button mat-button type="button" routerLink="/modify/{{rental._id}}">MODIFICA</button>
         </mat-card-actions>
 </mat-card>
 </div>

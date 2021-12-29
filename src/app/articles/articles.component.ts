@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { getArticles } from '../utils/APIs';
 import { FormBuilder } from '@angular/forms';
-import { ThemePalette } from '@angular/material/core';
+import { ThemePalette } from '@angular/material/core'
+import { NavigationStart, Router } from '@angular/router';
+import * as myGlobals from '../globals';
 
 
 export interface Task {
@@ -23,7 +25,7 @@ export interface Task {
 
 export class ArticlesComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   public stateDict: any = {
     'broken': "Non disponibile",
@@ -35,8 +37,8 @@ export class ArticlesComponent implements OnInit {
 
 
     queriesForm = this.formBuilder.group({
-      priceLow: 0,
-      priceHigh: 1000000,
+      priceLow: '',
+      priceHigh: '',
       sortBy: '',
       perfect: false,
       good: false,
@@ -65,6 +67,18 @@ export class ArticlesComponent implements OnInit {
     this.oneCol = (window.innerWidth <= 930) ? true : false;
     this.refillArticles();
     this.myArticlesFiltered = this.myArticles;
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart){
+        let myid= event.url.split('/');
+        let mystate: string= ''; 
+        for(let article of this.myArticlesFiltered){
+          if(article._id == myid[myid.length - 1]){
+            mystate= article.state;
+          }
+        }
+        myGlobals.setState(mystate);       
+      }
+    })
 
   }
 
@@ -223,9 +237,13 @@ letFilter(){
 
   priceRange(){
     let tmpArticles = this.myArticlesFiltered;
-    this.myArticlesFiltered= []
-    for(let article of tmpArticles){
-      if((article.price > this.queriesForm.value['priceLow']) && (article.price < this.queriesForm.value['priceHigh']))
+    this.myArticlesFiltered= [];
+    let min: any = this.queriesForm.value['priceLow']
+    if (min == '') min= -1;
+    let max: any = this.queriesForm.value['priceHigh']
+    if(max == '') max= 10000000;
+    for(let article of tmpArticles){     
+      if((article.price > min) && (article.price < max))
         this.myArticlesFiltered.push(article);
     }
   }

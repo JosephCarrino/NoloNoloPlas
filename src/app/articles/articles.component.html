@@ -76,7 +76,7 @@
             </mat-card-content>
             <mat-divider inset *ngIf="!(article.state == 'broken')"></mat-divider>
             <mat-card-actions>
-                <button *ngIf="!(article.state == 'broken')" mat-button type="button">NOLEGGIA</button>
+                <button *ngIf="!(article.state == 'broken')" mat-button type="button" routerLink="/rental/{{article._id}}">NOLEGGIA</button>
             </mat-card-actions>
     </mat-card>
 </div>

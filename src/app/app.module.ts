@@ -18,6 +18,7 @@ import { RentalModifyComponent } from './rental-modify/rental-modify.component';
 import { StartedRentalGuardService } from './started-rental-guard.service';
 import { ArticlesComponent } from './articles/articles.component';
 import { RentComponent } from './rent/rent.component';
+import { AvailableArticleGuardService } from './available-article-guard.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { RentComponent } from './rent/rent.component';
     BrowserAnimationsModule,
     AppUiModule
   ],
-  providers: [NotLoggedGuardService, StartedRentalGuardService, DatePipe],
+  providers: [AvailableArticleGuardService, NotLoggedGuardService, StartedRentalGuardService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
