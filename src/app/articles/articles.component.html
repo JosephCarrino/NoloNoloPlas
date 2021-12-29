@@ -10,7 +10,7 @@
             <li *ngFor="let subtask of task.subtasks">
             <mat-checkbox matInput [formControlName]="subtask.value" [(ngModel)]="subtask.completed"
                             [color]="subtask.color"
-                            (change)="filterByState()">
+                            (change)="letFilter()">
                 {{subtask.name}}
             </mat-checkbox>
             </li>
@@ -18,6 +18,24 @@
     </div>
         </span>
     </section>
+    <br>
+    <section class="example-section">
+        <span class="example-list-section">
+        <div [ngClass]="(oneCol) ? '.states2' : '.states'">
+        <h4>Categorie articolo</h4>
+        <ul [ngClass]="(oneCol) ? '' : 'checkRowCate'">
+            <li *ngFor="let subtask of categories.subtasks">
+            <mat-checkbox matInput [formControlName]="subtask.value" [(ngModel)]="subtask.completed"
+                            [color]="subtask.color"
+                            (change)="letFilter()">
+                {{subtask.name}}
+            </mat-checkbox>
+            </li>
+        </ul>
+    </div>
+        </span>
+    </section>
+    
     <br>
     <section>
         <h4>Ordinamento</h4>
@@ -29,23 +47,20 @@
             </mat-select>
         </mat-form-field>
     </section>
+    <br>
+    <section>
+        <h4>Prezzo</h4>
+        <mat-form-field >
+            <mat-label>Prezzo minimo</mat-label>
+            <input matInput formControlName="priceLow" (input)="letFilter()">
+        </mat-form-field>
+        <br><br>
+        <mat-form-field >
+            <mat-label>Prezzo massimo</mat-label>
+            <input matInput formControlName="priceHigh" (input)="letFilter()">
+        </mat-form-field>
+    </section>
 </form>
-<!--<section class="example-section">
-    <span class="example-list-section">
-    <div [ngClass]="(oneCol) ? '.states2' : '.states'">
-    <h4>Categoria articolo</h4>
-    <ul [ngClass]="(oneCol) ? '' : 'checkRowCate'">
-        <li *ngFor="let subtask of categories.subtasks" [attr.id]="subtask.name">
-        <mat-checkbox matInput [(ngModel)]="subtask.completed"
-                        [color]="subtask.color"
-                        (change)="filterByCategory()">
-            {{subtask.name}}
-        </mat-checkbox>
-        </li>
-    </ul>
-</div>
-    </span>
-</section>-->
 
 <div [ngClass]="oneCol ? '' : 'row container'">
     <mat-card *ngFor="let article of myArticlesFiltered" class="article">

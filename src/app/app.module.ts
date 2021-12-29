@@ -17,6 +17,7 @@ import { HistoryComponent } from './history/history.component';
 import { RentalModifyComponent } from './rental-modify/rental-modify.component';
 import { StartedRentalGuardService } from './started-rental-guard.service';
 import { ArticlesComponent } from './articles/articles.component';
+import { RentComponent } from './rent/rent.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ArticlesComponent } from './articles/articles.component';
     ProfileComponent,
     HistoryComponent,
     RentalModifyComponent,
-    ArticlesComponent
+    ArticlesComponent,
+    RentComponent
   ],
   imports: [
     BrowserModule,

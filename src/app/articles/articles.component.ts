@@ -31,16 +31,25 @@ export class ArticlesComponent implements OnInit {
     'good': "Ottimo",
     'perfect': "Perfetto"};
 
+    public cateFilt= ["Spada", "Busto", "Elmo", "Frecce", "Arco", "Scudo", "Gambali", "Artiglieria"]
 
 
     queriesForm = this.formBuilder.group({
       priceLow: 0,
-      priceHigh: 9999999,
+      priceHigh: 1000000,
       sortBy: '',
       perfect: false,
       good: false,
       suitable: false,
-      broken: false
+      broken: false,
+      Spada: false,
+      Busto: false,
+      Elmo: false,
+      Frecce: false,
+      Arco: false,
+      Scudo: false,
+      Gambali: false,
+      Artiglieria: false,
     })
 
 
@@ -110,8 +119,9 @@ export class ArticlesComponent implements OnInit {
     }
     for(let state of stateFound){
       let currTask: Task = {'name': state, 'value': state, 'completed': true, 'color': 'primary'};
-      if(this.categories){
+      if(this.task){
         if (this.categories.subtasks){
+          this.queriesForm.patchValue({state: true});
           this.categories.subtasks.push(currTask);
         }
       }
@@ -184,27 +194,39 @@ export class ArticlesComponent implements OnInit {
         this.myArticlesFiltered.push(article)
       }
     }
-    this.sortByPrice();
   }
 
   filterByCategory(){
     let temp = [];
-    if(this.categories.subtasks){
-    for(let i= 0; i < this.categories.subtasks.length; i++){ 
-      let myElem: any = document.getElementById(this.categories.subtasks[i].name);
-      if(myElem.getAttribute('checked'))    
-        temp.push(this.categories.subtasks[i].name);
+    for(let filter in this.queriesForm.value){
+      if(this.cateFilt.includes(filter)){
+        if(this.queriesForm.value[filter])
+          temp.push(filter);
+      }
     }
-    this.filteredCateg = temp;
+    this.filteredState = temp;
     let tmpArticles = this.myArticlesFiltered;
     this.myArticlesFiltered= []
-    console.log(this.filteredCateg)
     for(let article of tmpArticles){
-      if(this.filteredCateg.includes(article.category)){
+      if(this.filteredState.includes(article.category)){
         this.myArticlesFiltered.push(article)
       }
     }
-    this.sortByPrice();
+  }
+
+letFilter(){
+  this.filterByState();
+  this.filterByCategory();
+  this.priceRange();
+  this.sortByPrice();
+}
+
+  priceRange(){
+    let tmpArticles = this.myArticlesFiltered;
+    this.myArticlesFiltered= []
+    for(let article of tmpArticles){
+      if((article.price > this.queriesForm.value['priceLow']) && (article.price < this.queriesForm.value['priceHigh']))
+        this.myArticlesFiltered.push(article);
     }
   }
 
