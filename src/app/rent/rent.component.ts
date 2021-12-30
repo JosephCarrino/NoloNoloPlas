@@ -94,6 +94,7 @@ export class RentComponent implements OnInit {
     let tmpEnd: any = new Date();
     tmpEnd = this.datepipe.transform(this.dateForm.value['date_end'], 'YYYY-MM-dd'); 
     let infos = await checkAvailability(this.getId(), tmpStart, tmpEnd, true);
+    console.log(infos);
     if(infos.available){
       this.notAvailable= false;
       this.avalForm.patchValue({aval: false})

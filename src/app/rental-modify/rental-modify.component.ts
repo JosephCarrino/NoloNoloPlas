@@ -75,9 +75,9 @@ export class RentalModifyComponent implements OnInit {
       for(let value of toSend.entries()){
           newToSend[value[0]] = value[1];
         }
-      let available = await checkAvailability(this.myRentals[0]._id, (newToSend.date_start) ? newToSend.date_start : this.myRentals[0].date_start, (newToSend.date_end) ? newToSend.date_end : this.myRentals[0].date_end);
+      let available = await checkAvailability(this.myRentals[0].object_id, (newToSend.date_start) ? newToSend.date_start : this.myRentals[0].date_start, (newToSend.date_end) ? newToSend.date_end : this.myRentals[0].date_end);
       console.log(newToSend);
-      if(available)
+      if(available.available && available.estimated.price > 0)
         res = await patchRental(this.myRentals[0]._id, newToSend);
       else
         res= false;

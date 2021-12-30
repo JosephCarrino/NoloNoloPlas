@@ -151,10 +151,7 @@ export async function checkAvailability(id: string, date_start: string, date_end
     try{
         const response = await axios.get(getArticleUrl + id + '/available?start=' + date_start + '&end=' + date_end, {headers: {...advancedHeaders} });
         if(response.status === 200)
-            if(all)
-                return response.data;
-            else
-                return response.data.available;
+            return response.data;
         else
             return false;
     } catch (err:any){
@@ -179,6 +176,19 @@ export async function getArticles(){
 export async function createRental(body: any){
     try{
         const response = await axios.post(getRentalUrl, body, {headers: {...advancedHeaders}});
+        if(response.status === 200)
+            return true;
+        else
+            return false;
+    } catch (err:any){
+        console.log(err);
+        return false;
+    }
+}
+
+export async function delRental(id: string){
+    try{
+        const response =  await axios.delete(getRentalUrl + id, {headers: {...advancedHeaders}});
         if(response.status === 200)
             return true;
         else

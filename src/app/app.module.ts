@@ -20,6 +20,8 @@ import { ArticlesComponent } from './articles/articles.component';
 import { RentComponent } from './rent/rent.component';
 import { AvailableArticleGuardService } from './available-article-guard.service';
 import { ArticleCardComponent } from './article-card/article-card.component';
+import { DialogContentDeleteComponent } from './dialog-content-delete/dialog-content-delete.component';
+import { HomepageComponent } from './homepage/homepage.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { ArticleCardComponent } from './article-card/article-card.component';
     RentalModifyComponent,
     ArticlesComponent,
     RentComponent,
-    ArticleCardComponent
+    ArticleCardComponent,
+    DialogContentDeleteComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,

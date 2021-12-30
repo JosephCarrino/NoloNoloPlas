@@ -15,6 +15,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const uiModules = [
   MatSidenavModule,
@@ -32,7 +33,8 @@ const uiModules = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatCheckboxModule,
-  MatStepperModule
+  MatStepperModule,
+  MatDialogModule
 ]
 
 @NgModule({

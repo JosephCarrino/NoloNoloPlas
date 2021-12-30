@@ -10,8 +10,10 @@ import { StartedRentalGuardService } from './started-rental-guard.service';
 import { ArticlesComponent } from './articles/articles.component';
 import { RentComponent } from './rent/rent.component';
 import { AvailableArticleGuardService } from './available-article-guard.service';
+import { HomepageComponent } from './homepage/homepage.component';
 
 const routes: Routes = [
+  { path: '', component: HomepageComponent },
   { path: 'articles', component: ArticlesComponent, canActivate: [NotLoggedGuardService] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },

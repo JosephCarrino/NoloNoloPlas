@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { getUserId } from '../utils/auth';
-import { getRentals, getArticle } from '../utils/APIs';
+import { getRentals, getArticle, delRental } from '../utils/APIs';
 import { Router, NavigationStart } from '@angular/router';
 import * as myGlobals from '../globals';
 import {ThemePalette} from '@angular/material/core';
 import { FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import {MatDialog} from '@angular/material/dialog';
+import { DialogContentDeleteComponent } from '../dialog-content-delete/dialog-content-delete.component';
 
 
 export interface Task {
@@ -26,7 +28,7 @@ export interface Task {
 })
 export class HistoryComponent implements OnInit {
 
-  constructor(private router: Router, private formBuilder: FormBuilder, private datePipe: DatePipe) { }
+  constructor(private router: Router, private formBuilder: FormBuilder, private datePipe: DatePipe, public dialog: MatDialog) { }
 
   stateDict: any = { 
     'pending': 'In attesa di approvazione.', 
@@ -183,4 +185,20 @@ export class HistoryComponent implements OnInit {
     else
       this.refillRentals(newToSend);
   }
+
+  public deleteRental(id: string){
+    const dialogRef = this.dialog.open(DialogContentDeleteComponent);
+    dialogRef.afterClosed().subscribe(async result => {
+      if(result){
+        await delRental(id)
+        this.redirectTo('/history')
+      }
+    });
+  }
+
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
+ 
 }

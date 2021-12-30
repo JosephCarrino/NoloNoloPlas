@@ -1,0 +1,49 @@
+.title{
+    margin: auto;
+    text-align: center;
+    font-family: metamorphous;
+    margin-top: 15px;
+    font-size:7vh;
+}
+
+.owl-carousel{
+    margin: auto;
+    margin-top: 30px;
+    transform:translate3d(0,0,0);
+    z-index: 2;
+}
+
+*{
+    font-family: metamorphous;
+}
+
+
+.item{
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.carousel-image{
+    width: 100%;
+    margin: auto;
+    align-items: center !important;
+}
+
+#explanation{
+    margin: auto;
+}
+
+
+.fullcontainer{
+    background-color: #f7f7f7;
+    box-shadow: 5px 5px 5px grey;
+}
+
+.written{
+    padding: 15px;
+    margin-bottom: 10px;
+    text-align: justify;
+}
