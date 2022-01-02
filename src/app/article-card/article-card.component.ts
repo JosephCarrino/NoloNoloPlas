@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-article-card',
@@ -7,11 +8,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class ArticleCardComponent implements OnInit {
 
-  @Input()  article: any;
+  @Input() article: any;
   @Input() newPage: boolean;
-  constructor() { }
+  @Input() tryRent: boolean;
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  myNav(){
+    this.router.navigate(['checkprice'], { state: this.article });
+  }
 }

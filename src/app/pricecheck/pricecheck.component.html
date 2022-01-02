@@ -1,0 +1,33 @@
+<mat-stepper linear=true #stepper orientation="vertical" (selectionChange)="newMove($event)">
+    <mat-step [stepControl]="dateForm" label="Inserisci date di noleggio">
+        <ng-container *ngIf="myArticle"><app-article-card [article]="myArticle" [newPage]="true"></app-article-card></ng-container>
+        <br><br>
+      <form [formGroup]="dateForm">
+        <mat-form-field>
+            <mat-label>Data di Inizio</mat-label>
+            <input matInput [matDatepicker]="start" formControlName="date_start" required>
+            <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+            <mat-datepicker #start></mat-datepicker>
+          </mat-form-field>
+          
+          <mat-form-field>
+            <mat-label>Data di Fine</mat-label>
+            <input matInput [matDatepicker]="end" formControlName="date_end" required>
+            <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+            <mat-datepicker #end></mat-datepicker>
+          </mat-form-field>
+          <div>
+          <button mat-button matStepperNext (click)="checkDates()">Conferma</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Riepilogo Ordine">
+      <form>
+        <div>
+            <ng-container *ngIf="newArticle"><app-article-card [article]="newArticle" [newPage]="true"></app-article-card></ng-container>
+          <button mat-button matStepperPrevious>Indietro</button>
+          <button mat-button routerLink="/login">Accedi e noleggia subito!</button>
+        </div>
+      </form>
+    </mat-step>
+</mat-stepper>

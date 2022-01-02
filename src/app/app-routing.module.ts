@@ -11,6 +11,7 @@ import { ArticlesComponent } from './articles/articles.component';
 import { RentComponent } from './rent/rent.component';
 import { AvailableArticleGuardService } from './available-article-guard.service';
 import { HomepageComponent } from './homepage/homepage.component';
+import { PricecheckComponent } from './pricecheck/pricecheck.component'
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [NotLoggedGuardService] },
   { path: 'history', component: HistoryComponent, canActivate: [NotLoggedGuardService] },
   { path: 'modify/:id', component: RentalModifyComponent, canActivate: [StartedRentalGuardService] },
-  { path: 'rental/:id', component: RentComponent, canActivate: [AvailableArticleGuardService]}
+  { path: 'rental/:id', component: RentComponent, canActivate: [AvailableArticleGuardService] },
+  { path: 'checkprice', component: PricecheckComponent }
 ];
 
 @NgModule({

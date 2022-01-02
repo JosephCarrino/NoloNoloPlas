@@ -1,6 +1,8 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {OwlCarousel} from 'ngx-owl-carousel';
+import { OwlCarousel } from 'ngx-owl-carousel';
+import { getArticles } from '../utils/APIs';
+import { isLoggedIn } from '../utils/auth';
 
 @Component({
   selector: 'app-homepage',
@@ -12,12 +14,24 @@ export class HomepageComponent implements OnInit {
 
   breakpoint: number = 4;
   notBreakpoint: number = 3;
+  public myArticlesFiltered: any = [];
+  oneCol: boolean = false;
+
+
+  public stateDict: any = {
+    'broken': "Non disponibile",
+    'suitable': "Buono",
+    'good': "Ottimo",
+    'perfect': "Perfetto"};
+
 
   constructor() { }
 
   ngOnInit(): void {
     this.breakpoint = (window.innerWidth <= 930) ? 2 : 4;
     this.notBreakpoint = (window.innerWidth <= 930)  ?  1 : 2;
+    this.oneCol = (window.innerWidth <= 930) ? true : false;
+    this.refillArticles();
   }
 
   ngAfterViewInit(){
@@ -43,6 +57,22 @@ export class HomepageComponent implements OnInit {
   onResize(event: any) {
     this.breakpoint = (window.innerWidth <= 930) ? 2 : 4;
     this.notBreakpoint = (window.innerWidth <= 930)  ?  1 : 2;
+    this.oneCol = (window.innerWidth <= 930) ? true : false;
+  }
+
+
+  async refillArticles(){
+    let response: any = await getArticles();
+    for (let article of response){
+      article.img = 'https://site202129.tw.cs.unibo.it/img/articlesImages/' + article.img;
+      article.translated = this.stateDict[article.state];
+    }
+    this.myArticlesFiltered = response;
+    console.log(this.myArticlesFiltered);
+  }
+
+  mylog() {
+    return isLoggedIn();
   }
 
 }

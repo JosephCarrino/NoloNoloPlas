@@ -147,9 +147,12 @@ export async function getRental(id: string){
     }
 }
 
-export async function checkAvailability(id: string, date_start: string, date_end: string, all: boolean= false){
+export async function checkAvailability(id: string, date_start: string, date_end: string, rental: string= ''){
     try{
-        const response = await axios.get(getArticleUrl + id + '/available?start=' + date_start + '&end=' + date_end, {headers: {...advancedHeaders} });
+        let url: string = getArticleUrl + id + '/available?start=' + date_start + '&end=' + date_end;
+        if(rental != '')
+            url+= '&rental=' + rental;
+        const response = await axios.get(url, {headers: {...advancedHeaders} });
         if(response.status === 200)
             return response.data;
         else

@@ -37,3 +37,11 @@ body{
   #queriesForm > *{
       margin: auto;
   }
+
+  .red{
+    color: red;
+  }
+
+  #modify {
+    list-style-type:circle;
+  }

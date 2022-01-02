@@ -12,4 +12,7 @@
     </mat-grid-tile>
     <mat-grid-tile id="explanation" colspan="2"><div class="written">Salve amici di NoloNoloPlas! Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eos expedita earum fuga deserunt natus modi, placeat magnam incidunt quisquam est ipsam dolorum neque error in, ad quo saepe! Reprehenderit?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minus sapiente aperiam velit incidunt non dolore tenetur porro laborum asperiores dolorum optio dolor quis cupiditate itaque voluptatem vitae, eius cumque suscipit?Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam accusantium facilis porro consectetur a! Sit, ipsa. Labore cupiditate odit maiores accusamus atque quaerat necessitatibus accusantium harum aliquid voluptatibus! Illum, nam?</div></mat-grid-tile>
 </mat-grid-list>
-</div>
+<h4 class="subtitle">Alcune delle nostre proposte</h4>
+<div [ngClass]="oneCol ? 'tryArticles' : 'tryArticles row container'">
+    <app-article-card *ngFor="let article of myArticlesFiltered" [article]="article" [tryRent]="true"></app-article-card>
+ </div>

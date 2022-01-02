@@ -93,18 +93,19 @@ export class RentComponent implements OnInit {
     tmpStart = this.datepipe.transform(this.dateForm.value['date_start'], 'YYYY-MM-dd'); 
     let tmpEnd: any = new Date();
     tmpEnd = this.datepipe.transform(this.dateForm.value['date_end'], 'YYYY-MM-dd'); 
-    let infos = await checkAvailability(this.getId(), tmpStart, tmpEnd, true);
-    console.log(infos);
+    let infos = await checkAvailability(this.getId(), tmpStart, tmpEnd);
     if(infos.available){
       this.notAvailable= false;
       this.avalForm.patchValue({aval: false})
       for(let field in this.myArticle){
         this.newArticle[field]= this.myArticle[field];
       }
+      
       this.newArticle.final= infos.estimated.price;
       this.newArticle.discounts=infos.estimated.summary;
       this.newArticle.start=  tmpStart;
       this.newArticle.end= tmpEnd;
+      this.newArticle.fakePrice = Math.round((((this.dateForm.value['date_end'] - this.dateForm.value['date_start']) / (1000 * 60 * 60 * 24))) * this.newArticle.price);
    } else{
      this.newArticle = {}
       this.notAvailable= true;

@@ -22,6 +22,7 @@ import { AvailableArticleGuardService } from './available-article-guard.service'
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { DialogContentDeleteComponent } from './dialog-content-delete/dialog-content-delete.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { PricecheckComponent } from './pricecheck/pricecheck.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { HomepageComponent } from './homepage/homepage.component';
     RentComponent,
     ArticleCardComponent,
     DialogContentDeleteComponent,
-    HomepageComponent
+    HomepageComponent,
+    PricecheckComponent
   ],
   imports: [
     BrowserModule,
