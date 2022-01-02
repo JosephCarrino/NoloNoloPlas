@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { isLoggedIn } from '../utils/auth';
 
 @Component({
   selector: 'app-article-card',
@@ -18,5 +19,9 @@ export class ArticleCardComponent implements OnInit {
 
   myNav(){
     this.router.navigate(['checkprice'], { state: this.article });
+  }
+
+  mylog(){
+    return isLoggedIn();
   }
 }

@@ -8,6 +8,7 @@ const patchUserUrl = baseUrl + 'api/users/';
 const getArticleUrl = baseUrl + 'api/articles/';
 const getPaymentUrl = baseUrl + 'api/paymentMethods/';
 const getRentalUrl = baseUrl + 'api/rentals/';
+const getCategoriesUrl = baseUrl + 'api/articles/category';
 
 
 const standardHeaders = {
@@ -198,6 +199,18 @@ export async function delRental(id: string){
             return false;
     } catch (err:any){
         console.log(err);
+        return false;
+    }
+}
+
+export async function getCategories(){
+    try{
+        const response = await axios.get(getCategoriesUrl, {headers: {...advancedHeaders}});
+        if(response.status === 200)
+            return response.data;
+        else
+            return false;
+    } catch (err: any){
         return false;
     }
 }

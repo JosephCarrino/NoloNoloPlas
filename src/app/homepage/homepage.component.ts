@@ -1,7 +1,7 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OwlCarousel } from 'ngx-owl-carousel';
-import { getArticles } from '../utils/APIs';
+import { getCategories } from '../utils/APIs';
 import { isLoggedIn } from '../utils/auth';
 
 @Component({
@@ -62,13 +62,12 @@ export class HomepageComponent implements OnInit {
 
 
   async refillArticles(){
-    let response: any = await getArticles();
+    let response: any = await getCategories();
     for (let article of response){
       article.img = 'https://site202129.tw.cs.unibo.it/img/articlesImages/' + article.img;
       article.translated = this.stateDict[article.state];
     }
     this.myArticlesFiltered = response;
-    console.log(this.myArticlesFiltered);
   }
 
   mylog() {

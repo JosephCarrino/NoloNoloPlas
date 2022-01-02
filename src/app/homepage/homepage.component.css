@@ -50,6 +50,7 @@
 
 app-article-card{
     margin: auto;
+    max-width: 300px;
     
 }
 
