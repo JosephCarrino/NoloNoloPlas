@@ -23,6 +23,7 @@ import { ArticleCardComponent } from './article-card/article-card.component';
 import { DialogContentDeleteComponent } from './dialog-content-delete/dialog-content-delete.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { PricecheckComponent } from './pricecheck/pricecheck.component';
+import { DialogContentReplaceComponent } from './dialog-content-replace/dialog-content-replace.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PricecheckComponent } from './pricecheck/pricecheck.component';
     ArticleCardComponent,
     DialogContentDeleteComponent,
     HomepageComponent,
-    PricecheckComponent
+    PricecheckComponent,
+    DialogContentReplaceComponent
   ],
   imports: [
     BrowserModule,

@@ -9,7 +9,8 @@ const getArticleUrl = baseUrl + 'api/articles/';
 const getPaymentUrl = baseUrl + 'api/paymentMethods/';
 const getRentalUrl = baseUrl + 'api/rentals/';
 const getCategoriesUrl = baseUrl + 'api/articles/category';
-
+const getSuggestedUrl = baseUrl + 'api/articles/suggested/';
+const patchSuggestedUrl = baseUrl + 'api/rentals/suggested/';
 
 const standardHeaders = {
     'Content-Type': 'application/json',
@@ -211,6 +212,32 @@ export async function getCategories(){
         else
             return false;
     } catch (err: any){
+        return false;
+    }
+}
+
+export async function getSuggested(id: string, start: string, end: string){
+    try{
+        const response = await axios.get(getSuggestedUrl + id + "?start=" + start + "&end=" + end, {headers: {...advancedHeaders}});
+        if(response.status === 200)
+            return response.data;
+        else
+            return false;
+    } catch (err: any){
+        console.log(err);
+        return false;
+    }
+}
+
+export async function patchSuggested(id: string, newId: string){
+    try{
+        const response = await axios.patch(patchSuggestedUrl + id + "?article=" + newId, {}, {headers: {...advancedHeaders}});
+        if(response.status === 200)
+            return response.data;
+        else
+            return false;
+    } catch (err: any){
+        console.log(err);
         return false;
     }
 }

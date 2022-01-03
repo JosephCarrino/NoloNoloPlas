@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { getUserId } from '../utils/auth';
-import { getRentals, getArticle, delRental } from '../utils/APIs';
+import { getRentals, getArticle, delRental, getSuggested, patchSuggested } from '../utils/APIs';
 import { Router, NavigationStart } from '@angular/router';
 import * as myGlobals from '../globals';
 import {ThemePalette} from '@angular/material/core';
@@ -8,6 +8,7 @@ import { FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogContentDeleteComponent } from '../dialog-content-delete/dialog-content-delete.component';
+import { DialogContentReplaceComponent } from '../dialog-content-replace/dialog-content-replace.component';
 
 
 export interface Task {
@@ -34,7 +35,8 @@ export class HistoryComponent implements OnInit {
     'pending': 'In attesa di approvazione.', 
     'approved': 'Approvato.',
     'progress': 'In corso.',
-    'ended': 'Terminato.'
+    'ended': 'Terminato.',
+    'delayed': 'In ritardo.'
   }
 
   public oneCol: boolean = false;
@@ -66,6 +68,7 @@ export class HistoryComponent implements OnInit {
     approved: true,
     started: true,
     ended: true,
+    delayed: true,
     date_start: '',
     date_end: ''
   })
@@ -73,9 +76,14 @@ export class HistoryComponent implements OnInit {
   async refillRentals(queries: any){
     let res: any = await getRentals(getUserId(), queries);
     const moRent = res.data;
+    let today: any = new Date();
+    today.setDate(today.getDate() + 1);
+    const tomorrow = today.toISOString().split('T')[0]
     for(let rental of moRent){
       rental.myItem = await getArticle(rental.object_id);
       rental.myItem = rental.myItem.data;
+      if(tomorrow == rental.date_start.slice(0,10) && rental.myItem.state == "broken" || rental.myItem.state == "unavailable")
+        rental.tosub = true;
       rental.date_start = rental.date_start.slice(0,10);
       rental.date_end = rental.date_end.slice(0,10);
       rental.state = this.stateDict[rental.state];
@@ -118,6 +126,7 @@ export class HistoryComponent implements OnInit {
       {name: 'Approvati', value: 'approved', completed: true, color: 'accent'},
       {name: 'Iniziati', value: 'started', completed: true, color: 'warn'},
       {name: 'Conclusi', value: 'ended', completed: true, color: 'accent'},
+      {name: 'In ritardo', value: 'delayed', completed: true, color: 'warn'}
     ],
   };
 
@@ -146,13 +155,13 @@ export class HistoryComponent implements OnInit {
     let toSend: any = {}
     let all: boolean = true;
     for(let field in this.queriesForm.value){
-      if(field == "pending" || field == "approved" || field == "started" || field == "ended")
+      if(field == "pending" || field == "approved" || field == "started" || field == "ended" || field == "delayed")
         if(!this.queriesForm.value[field])
           all= false;
     }
     for(let field in this.queriesForm.value){
       if(this.queriesForm.value[field]){
-        if((field == "pending" || field == "approved" || field == "started" || field == "ended")){
+        if((field == "pending" || field == "approved" || field == "started" || field == "ended" || field == "delayed")){
           if(!all)
             toSend[field] = this.queriesForm.value[field];
         } else {
@@ -186,8 +195,12 @@ export class HistoryComponent implements OnInit {
       this.refillRentals(newToSend);
   }
 
-  public deleteRental(id: string){
-    const dialogRef = this.dialog.open(DialogContentDeleteComponent);
+  public deleteRental(id: string, pass: boolean = false){
+    const dialogRef = this.dialog.open(DialogContentDeleteComponent, {
+      data: {
+        patched: pass
+      }
+    });
     dialogRef.afterClosed().subscribe(async result => {
       if(result){
         await delRental(id)
@@ -199,6 +212,27 @@ export class HistoryComponent implements OnInit {
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));
+ }
+
+ async showSuggested(id: string, start: string, end: string, rentalId: string){
+    const response = await getSuggested(id, start, end);
+    const newObj = response.alternative;
+    newObj.img= 'https://site202129.tw.cs.unibo.it/img/articlesImages/' + newObj.img;
+    const dialogRef = this.dialog.open(DialogContentReplaceComponent, {
+      data: {
+        article: newObj
+      }
+    });
+    dialogRef.afterClosed().subscribe(async result => {
+      if(result){
+        const res = await patchSuggested(rentalId, newObj._id);
+        if(res)
+          this.redirectTo('/history')
+        else{
+          this.deleteRental(id, true)
+        }
+      }
+    });
  }
  
 }

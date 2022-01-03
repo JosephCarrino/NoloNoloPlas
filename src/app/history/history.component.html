@@ -53,11 +53,17 @@
             <p><b>Stato del Noleggio: </b>{{rental.state}}</p>
             <p *ngIf="rental.estimated.summary.length != 0"><b>Modifiche al prezzo:</b></p> <ul id="modify"><li class="red" *ngFor="let summ of rental.estimated.summary">{{summ}}</li></ul>
             <h3><b>Costo: €{{rental.estimated.price}}</b></h3>
+            <h3 *ngIf="(rental.tosub == true)" class="red"><b>L'oggetto risulta al momento rotto o non disponibile!</b></h3>
         </mat-card-content>
-        <mat-divider inset *ngIf="((rental.state == 'In attesa di approvazione.') || (rental.state == 'Approvato'))"></mat-divider>
-        <mat-card-actions *ngIf="((rental.state == 'In attesa di approvazione.') || (rental.state == 'Approvato'))">
+        <mat-divider inset *ngIf="((rental.state == 'In attesa di approvazione.') || (rental.state == 'Approvato.') || (rental.tosub == true))"></mat-divider>
+        <mat-card-actions *ngIf="(((rental.state == 'In attesa di approvazione.') || (rental.state == 'Approvato.')) && (!rental.tosub))">
             <button mat-button type="button" routerLink="/modify/{{rental._id}}">MODIFICA</button>
             <button mat-button type="button" color="warn" (click)="deleteRental(rental._id)">ELIMINA</button>
+        </mat-card-actions>
+        <mat-card-actions *ngIf="((rental.tosub == true))">
+            <button mat-button type="button" routerLink="/modify/{{rental._id}}">MODIFICA</button>
+            <button mat-button type="button" color="warn" (click)="deleteRental(rental._id)">ELIMINA</button>
+            <button mat-button type="button" color="primary" (click)="showSuggested(rental.myItem._id, rental.date_start, rental.date_end, rental._id)">SOSTITUISCI GRATIS</button>
         </mat-card-actions>
 </mat-card>
 </div>

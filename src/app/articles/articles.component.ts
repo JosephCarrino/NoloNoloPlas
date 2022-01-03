@@ -31,7 +31,8 @@ export class ArticlesComponent implements OnInit {
     'broken': "Non disponibile",
     'suitable': "Buono",
     'good': "Ottimo",
-    'perfect': "Perfetto"};
+    'perfect': "Perfetto",
+    'unavailable': "Non disponibile"};
 
     public cateFilt= ["Spada", "Busto", "Elmo", "Frecce", "Arco", "Scudo", "Gambali", "Artiglieria"]
 
@@ -44,6 +45,7 @@ export class ArticlesComponent implements OnInit {
       good: false,
       suitable: false,
       broken: false,
+      unavailable: false,
       Spada: false,
       Busto: false,
       Elmo: false,

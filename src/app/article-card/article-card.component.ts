@@ -12,6 +12,7 @@ export class ArticleCardComponent implements OnInit {
   @Input() article: any;
   @Input() newPage: boolean;
   @Input() tryRent: boolean;
+  @Input() subs: boolean;
   constructor(private router: Router) { }
 
   ngOnInit(): void {
