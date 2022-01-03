@@ -11,6 +11,7 @@ const getRentalUrl = baseUrl + 'api/rentals/';
 const getCategoriesUrl = baseUrl + 'api/articles/category';
 const getSuggestedUrl = baseUrl + 'api/articles/suggested/';
 const patchSuggestedUrl = baseUrl + 'api/rentals/suggested/';
+const getAvailablesUrl = baseUrl + 'api/articles/availables';
 
 const standardHeaders = {
     'Content-Type': 'application/json',
@@ -234,6 +235,19 @@ export async function patchSuggested(id: string, newId: string){
         const response = await axios.patch(patchSuggestedUrl + id + "?article=" + newId, {}, {headers: {...advancedHeaders}});
         if(response.status === 200)
             return response.data;
+        else
+            return false;
+    } catch (err: any){
+        console.log(err);
+        return false;
+    }
+}
+
+export async function getAvailables(start: string, end: string){
+    try{
+        const response: any = await axios.get(getAvailablesUrl + "?start=" + start + "&end=" + end, {headers: {...advancedHeaders}});
+        if(response.status === 200)
+            return response.data.availables;
         else
             return false;
     } catch (err: any){

@@ -41,7 +41,9 @@
         <h4>Ordinamento</h4>
         <mat-form-field [ngClass]="oneCol ? '' : ''">
             <mat-label for="sortBy">Ordina per:</mat-label>
-            <mat-select matInput id="sortingSelect" formControlName="sortBy" (selectionChange)="sortByPrice()">
+            <mat-select matInput id="sortingSelect" formControlName="sortBy" (selectionChange)="letFilter()">
+                <mat-option value="oldest">Prodotti aggiunti meno recentemente</mat-option>
+                <mat-option value="newest">Prodotti aggiunti più recentemente</mat-option>
                 <mat-option value="higherPrice">Prezzo discendente</mat-option>
                 <mat-option value="lowerPrice">Prezzo ascendente</mat-option>
             </mat-select>
@@ -60,8 +62,25 @@
             <input matInput formControlName="priceHigh" (input)="letFilter()">
         </mat-form-field>
     </section>
+    <br>
+    <section>
+        <h4>Date di disponibilità</h4>
+        <mat-form-field>
+            <mat-label>Data di Inizio</mat-label>
+            <input matInput [matDatepicker]="start_date" formControlName="start_date" (dateChange)="letFilter()">
+            <mat-datepicker-toggle matSuffix [for]="start_date"></mat-datepicker-toggle>
+            <mat-datepicker #start_date></mat-datepicker>
+          </mat-form-field>
+          <br><br>
+          <mat-form-field>
+            <mat-label>Data di Fine</mat-label>
+            <input matInput [matDatepicker]="end_date" formControlName="end_date" (dateChange)="letFilter()">
+            <mat-datepicker-toggle matSuffix [for]="end_date"></mat-datepicker-toggle>
+            <mat-datepicker #end_date></mat-datepicker>
+          </mat-form-field>
+    </section>
 </form>
 
 <div [ngClass]="oneCol ? '' : 'row container'">
-   <app-article-card *ngFor="let article of myArticlesFiltered" [article]="article"></app-article-card>
+    <app-article-card *ngFor="let article of myArticlesFiltered" [article]="article"></app-article-card>    
 </div>

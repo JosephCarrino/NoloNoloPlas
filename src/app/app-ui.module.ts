@@ -16,6 +16,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const uiModules = [
   MatSidenavModule,
@@ -34,7 +35,8 @@ const uiModules = [
   MatNativeDateModule,
   MatCheckboxModule,
   MatStepperModule,
-  MatDialogModule
+  MatDialogModule,
+  MatPaginatorModule
 ]
 
 @NgModule({

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { getArticles } from '../utils/APIs';
+import { getArticles, getAvailables } from '../utils/APIs';
 import { FormBuilder } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core'
 import { NavigationStart, Router } from '@angular/router';
 import * as myGlobals from '../globals';
+import { DatePipe } from '@angular/common';
 
 
 export interface Task {
@@ -25,7 +26,7 @@ export interface Task {
 
 export class ArticlesComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private datepipe: DatePipe) { }
 
   public stateDict: any = {
     'broken': "Non disponibile",
@@ -40,7 +41,9 @@ export class ArticlesComponent implements OnInit {
     queriesForm = this.formBuilder.group({
       priceLow: '',
       priceHigh: '',
-      sortBy: '',
+      sortBy: 'oldest',
+      start_date: '',
+      end_date: '',
       perfect: false,
       good: false,
       suitable: false,
@@ -56,7 +59,7 @@ export class ArticlesComponent implements OnInit {
       Artiglieria: false,
     })
 
-
+  public isReversed: boolean = false;
   public oneCol: boolean = false;
   public myArticles: any = [];
   public filteredState: any = [];
@@ -231,10 +234,20 @@ export class ArticlesComponent implements OnInit {
   }
 
 letFilter(){
+  if(this.queriesForm.value['sortBy'] === 'newest' && !this.isReversed){
+    this.myArticles.reverse();
+    this.isReversed = true;
+  }
+  else if (this.queriesForm.value['sortBy'] === 'oldest' && this.isReversed){
+    this.myArticles.reverse();
+    this.isReversed = false;
+  }
   this.filterByState();
   this.filterByCategory();
   this.priceRange();
-  this.sortByPrice();
+  this.filterAvailables();
+  if(this.queriesForm.value['sortBy'] !== 'newest' && this.queriesForm.value['sortBy'] !== 'oldest')
+    this.sortByPrice();
 }
 
   priceRange(){
@@ -258,6 +271,24 @@ letFilter(){
         else if(a.price > b.price) return -mul
         else return 0
       })
+    }
+  }
+
+  async filterAvailables(){
+    if(this.queriesForm.value['start_date'] && this.queriesForm.value['end_date']){
+    let tmpStart: any = new Date();
+    tmpStart = this.datepipe.transform(this.queriesForm.value['start_date'], 'YYYY-MM-dd'); 
+    let tmpEnd: any = new Date();
+    tmpEnd = this.datepipe.transform(this.queriesForm.value['end_date'], 'YYYY-MM-dd'); 
+      let tmp = this.myArticlesFiltered;
+      this.myArticlesFiltered = [];    
+      if(tmpStart < tmpEnd){
+        const availables = await getAvailables(tmpStart, tmpEnd)
+        for(let article of tmp){
+          if(availables.includes(article._id))
+            this.myArticlesFiltered.push(article);
+        }
+      }
     }
   }
 
