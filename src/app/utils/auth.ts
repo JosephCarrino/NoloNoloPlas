@@ -26,7 +26,7 @@ export async function login(username: string, password: string){
         let status = res.status;
         res = await res.json();
         if(status === 200){
-            setToken(res.authority);
+            await setToken(res.authority);
         }       
     } catch (e) {
         console.error(e);
@@ -76,7 +76,7 @@ export async function register(data: regForm){
     }
 }
 
-export function setToken(token: string){
+export async function setToken(token: string){
     localStorage[ACCESS_TOKEN_STORAGE] = token;
     let myObj: any = jwt_decode(token);
     localStorage['userId'] = myObj.id; 

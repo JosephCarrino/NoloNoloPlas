@@ -17,6 +17,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatBadgeModule } from '@angular/material/badge'; 
 
 const uiModules = [
   MatSidenavModule,
@@ -36,7 +37,8 @@ const uiModules = [
   MatCheckboxModule,
   MatStepperModule,
   MatDialogModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatBadgeModule
 ]
 
 @NgModule({

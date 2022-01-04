@@ -79,8 +79,14 @@
             <mat-datepicker #end_date></mat-datepicker>
           </mat-form-field>
     </section>
+    <br>
+    <section>
+        <mat-checkbox matInput formControlName="favorites" (change)="letFilter()">
+            Filtra solo preferiti
+        </mat-checkbox>
+    </section>
 </form>
 
 <div [ngClass]="oneCol ? '' : 'row container'">
-    <app-article-card *ngFor="let article of myArticlesFiltered" [article]="article"></app-article-card>    
+    <app-article-card *ngFor="let article of myArticlesFiltered" [article]="article" [userId]="userId"></app-article-card>    
 </div>

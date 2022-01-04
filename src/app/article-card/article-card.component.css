@@ -1,3 +1,10 @@
+
+.mat-badge-content {
+    font-family: 'Material Icons';
+}
+
+
+
 .article{
     background-color: #f7f7f7;
     max-width: 300px;
@@ -75,4 +82,15 @@ body{
 
 .red{
     color: red;
+}
+
+.favorite{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-decoration: none;
+    border: none;
+    cursor:pointer;
+    color: #ff5252;
+    background-color: #f7f7f7;
 }

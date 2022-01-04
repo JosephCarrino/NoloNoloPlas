@@ -54,6 +54,7 @@ export async function register(regForm: any){
 export async function getUserInfo(id: string){
     try{
         const response = await axios.get(getUserUrl + id, { headers: {...advancedHeaders}});
+        
         return(response);
     } catch (err: any){
         return { error: err.response.data.message}
@@ -102,7 +103,6 @@ export async function getRentals(id: string, queries: any){
             if(queries.date_start) (first == 0) ? url+= 'date_start=' + queries.date_start : url+= '&date_start=' + queries.date_start ;
             if(queries.date_end) (first == 1) ? url+= 'date_end=' + queries.date_end : url+= '&end=' + queries.date_end;
             if(queries.state) (first ==  2) ?  url+='state=' + queries.state : url+='&state=' + queries.state;
-            console.log(url);
         }
         const response = await axios.get(url, { headers: {...advancedHeaders} });
         if(response.status === 200)
@@ -250,6 +250,32 @@ export async function getAvailables(start: string, end: string){
             return response.data.availables;
         else
             return false;
+    } catch (err: any){
+        console.log(err);
+        return false;
+    }
+}
+
+export async function addPreferences(id: string, toSend: any){
+    try{
+        const response: any = await axios.post(getUserUrl + id + "/preferences", {preferences: toSend}, {headers: {...advancedHeaders}});
+    if(response.status === 200)
+        return true;    
+    else
+        return false;
+    } catch (err: any){
+        console.log(err);
+        return false;
+    }
+}
+
+export async function removePreferences(id: string, toSend: any){
+    try{
+        const response: any = await axios.delete(getUserUrl + id + "/preferences", {headers: {...advancedHeaders}, data: {preferences: toSend}});
+    if(response.status === 200)
+        return true;    
+    else
+        return false;
     } catch (err: any){
         console.log(err);
         return false;

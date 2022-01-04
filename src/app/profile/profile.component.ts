@@ -75,6 +75,7 @@ export class ProfileComponent implements OnInit {
 
   async refillForm(): Promise<void> {
     let res: any = await getUserInfo(getUserId());
+    delete res.data.preferences;
     this.imageUrl+= (res.data.avatar != "") ? res.data.avatar : "/defaultCustomer.jpg";
     res.data.avatar = "";
     this.retrievedForm = this.formBuilder.group(res.data);

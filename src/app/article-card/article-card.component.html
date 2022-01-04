@@ -1,8 +1,12 @@
-<mat-card class="article">
+<mat-card class="article" >
     <mat-card-title-group [ngClass]="(article.state == 'broken') ? 'broken' : ''">
         <mat-card-title>{{article.name}}</mat-card-title>
         <mat-card-subtitle>{{article.superCategory}}</mat-card-subtitle>
         <img alt="{{article.name}} image" class="imgrent" mat-card-md-image src={{article.img}}>
+        <section *ngIf="!newPage && !tryRent">
+            <button *ngIf="article.favorite" type="button" class="favorite" (click)="removePref(article._id)"><mat-icon>favorite</mat-icon></button>
+            <button *ngIf="!article.favorite" type="button" class="favorite" (click)="addPref(article._id)"><mat-icon>favorite_border</mat-icon></button>
+        </section>
     </mat-card-title-group>
         <mat-card-content>
             <p><b>Categoria: </b>{{article.category}}</p>

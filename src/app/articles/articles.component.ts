@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { getArticles, getAvailables } from '../utils/APIs';
+import { getArticles, getAvailables, getUserInfo } from '../utils/APIs';
 import { FormBuilder } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core'
 import { NavigationStart, Router } from '@angular/router';
 import * as myGlobals from '../globals';
 import { DatePipe } from '@angular/common';
+import { getUserId } from '../utils/auth';
 
 
 export interface Task {
@@ -39,6 +40,7 @@ export class ArticlesComponent implements OnInit {
 
 
     queriesForm = this.formBuilder.group({
+      favorites: false,
       priceLow: '',
       priceHigh: '',
       sortBy: 'oldest',
@@ -59,6 +61,7 @@ export class ArticlesComponent implements OnInit {
       Artiglieria: false,
     })
 
+  public userId: string = "";
   public isReversed: boolean = false;
   public oneCol: boolean = false;
   public myArticles: any = [];
@@ -148,8 +151,16 @@ export class ArticlesComponent implements OnInit {
   }
 
   async refillArticles(){
+    this.userId = getUserId();
+    let infos: any = await getUserInfo(this.userId);
     let response: any = await getArticles();
+    infos = infos.data
     for (let article of response){
+      if(infos.preferences){
+        if(infos.preferences.includes(article._id)){
+          article.favorite = true;
+        }
+      }
       article.img = 'https://site202129.tw.cs.unibo.it/img/articlesImages/' + article.img;
       article.translated = this.stateDict[article.state];
     }
@@ -243,11 +254,23 @@ letFilter(){
     this.isReversed = false;
   }
   this.filterByState();
+  this.filterFavorites();
   this.filterByCategory();
   this.priceRange();
   this.filterAvailables();
   if(this.queriesForm.value['sortBy'] !== 'newest' && this.queriesForm.value['sortBy'] !== 'oldest')
     this.sortByPrice();
+}
+
+filterFavorites(){
+  if(this.queriesForm.value['favorites']){
+    let tmpArticles = this.myArticlesFiltered;
+    this.myArticlesFiltered= [];
+    for(let article of tmpArticles){
+      if(article.favorite)
+        this.myArticlesFiltered.push(article);
+    }
+  }
 }
 
   priceRange(){

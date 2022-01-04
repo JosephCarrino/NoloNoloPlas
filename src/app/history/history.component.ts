@@ -39,6 +39,13 @@ export class HistoryComponent implements OnInit {
     'delayed': 'In ritardo.'
   }
 
+  newStateDict: any = {
+    'perfect': 'perfetto',
+    'suitable': 'buono',
+    'good': 'ottimo',
+    'broken': 'rotto'
+  }
+
   public oneCol: boolean = false;
   public wrong: boolean = false;
   public myRentals: any;
@@ -88,6 +95,15 @@ export class HistoryComponent implements OnInit {
       rental.date_end = rental.date_end.slice(0,10);
       rental.state = this.stateDict[rental.state];
       rental.modState = false;
+      let newSum= []
+      for(let sum of rental.estimated.summary){
+        sum = sum.replace('(', ' (')
+        for(let eng in this.newStateDict){
+          sum = sum.replace(eng, this.newStateDict[eng]);
+        }
+        newSum.push(sum);
+      }
+      rental.estimated.summary = newSum;
       rental.myItem.img = 'https://site202129.tw.cs.unibo.it/img/articlesImages/' + rental.myItem.img;
     }
     this.myRentals = moRent;

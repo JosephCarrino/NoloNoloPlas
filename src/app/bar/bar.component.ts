@@ -21,5 +21,13 @@ export class BarComponent implements OnInit {
     localStorage.clear();
   }
 
+  toManager(): void{
+    window.location.href = 'https://site202129.tw.cs.unibo.it/dashboard'
+  }
+
+  toEmployee(): void{
+    window.location.href = 'https://site202129.tw.cs.unibo.it/staff'
+  }
+
   public isMenuOpen: boolean = false;
 }
