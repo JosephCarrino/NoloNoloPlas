@@ -74,7 +74,7 @@ export class ProfileComponent implements OnInit {
   ];
 
   async refillForm(): Promise<void> {
-    let res: any = await getUserInfo(getUserId());
+    let res: any = await getUserInfo(await getUserId());
     delete res.data.preferences;
     this.imageUrl+= (res.data.avatar != "") ? res.data.avatar : "/defaultCustomer.jpg";
     res.data.avatar = "";
@@ -114,7 +114,7 @@ export class ProfileComponent implements OnInit {
       }
     }
 
-    let res: boolean = await patchUser(getUserId(), toSend);
+    let res: boolean = await patchUser(await getUserId(), toSend);
     this.inProgress = false;
     this.wrong = !res;
     this.patched = res;

@@ -61,6 +61,7 @@ export class ArticlesComponent implements OnInit {
       Artiglieria: false,
     })
 
+  public hide: boolean = false;
   public userId: string = "";
   public isReversed: boolean = false;
   public oneCol: boolean = false;
@@ -151,7 +152,7 @@ export class ArticlesComponent implements OnInit {
   }
 
   async refillArticles(){
-    this.userId = getUserId();
+    this.userId = await getUserId();
     let infos: any = await getUserInfo(this.userId);
     let response: any = await getArticles();
     infos = infos.data

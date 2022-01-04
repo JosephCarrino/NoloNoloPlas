@@ -86,7 +86,7 @@ export function getToken(){
     return localStorage[ACCESS_TOKEN_STORAGE];
 }
 
-export function getUserId(){
+export async function getUserId(){
     return localStorage['userId'];
 }
 

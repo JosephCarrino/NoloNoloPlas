@@ -81,7 +81,7 @@ export class HistoryComponent implements OnInit {
   })
 
   async refillRentals(queries: any){
-    let res: any = await getRentals(getUserId(), queries);
+    let res: any = await getRentals(await getUserId(), queries);
     const moRent = res.data;
     let today: any = new Date();
     today.setDate(today.getDate() + 1);

@@ -79,7 +79,7 @@ export class RentComponent implements OnInit {
 
   async postRental(){
     let toSend: any = {}
-    toSend['userId']= getUserId();
+    toSend['userId']= await getUserId();
     toSend['object_id']= this.getId();
     toSend['date_start']= this.datepipe.transform(this.dateForm.value['date_start'], 'YYYY-MM-dd');
     toSend['date_end']= this.datepipe.transform(this.dateForm.value['date_end'], 'YYYY-MM-dd');

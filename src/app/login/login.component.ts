@@ -29,8 +29,9 @@ export class LoginComponent implements OnInit {
     this.inProgress = true;
     await login(this.loginForm.value.username, this.loginForm.value.password);
     if(isLoggedIn()){
-      this.inProgress = false;
-      this.router.navigate(['../']);
+      setTimeout(() => {      
+        this.inProgress = false;
+        this.router.navigate(['../']);}, 4000);
     } else {
       this.inProgress = false;
       this.wrong = true;

@@ -1,8 +1,16 @@
 <h1><b>I nostri Articoli</b></h1>
 
+<div id="hideFilters">
+    <h4 id="titlhide">Nascondi filtri</h4>
+    <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Nascondi filtri'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+</div>
+<br>
+<div id="myFilters" [hidden]="hide">
+    <h3>Filtri disponibili</h3>
 <form id="queriesForm" [formGroup]="queriesForm" #formDir="ngForm">
     <section class="example-section">
-        <h3>Filtri disponibili</h3>
         <span class="example-list-section">
         <div [ngClass]="(oneCol) ? '.states2' : '.states'">
         <h4>Stato articolo</h4>
@@ -86,6 +94,7 @@
         </mat-checkbox>
     </section>
 </form>
+</div>
 
 <div [ngClass]="oneCol ? '' : 'row container'">
     <app-article-card *ngFor="let article of myArticlesFiltered" [article]="article" [userId]="userId"></app-article-card>    
