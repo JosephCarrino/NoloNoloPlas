@@ -36,7 +36,8 @@ export class HistoryComponent implements OnInit {
     'approved': 'Approvato.',
     'progress': 'In corso.',
     'ended': 'Terminato.',
-    'delayed': 'In ritardo.'
+    'delayed': 'In ritardo.',
+    'deleted': 'Cancellato.'
   }
 
   newStateDict: any = {
@@ -76,6 +77,7 @@ export class HistoryComponent implements OnInit {
     started: true,
     ended: true,
     delayed: true,
+    deleted: true,
     date_start: '',
     date_end: ''
   })
@@ -142,7 +144,8 @@ export class HistoryComponent implements OnInit {
       {name: 'Approvati', value: 'approved', completed: true, color: 'accent'},
       {name: 'Iniziati', value: 'started', completed: true, color: 'warn'},
       {name: 'Conclusi', value: 'ended', completed: true, color: 'accent'},
-      {name: 'In ritardo', value: 'delayed', completed: true, color: 'warn'}
+      {name: 'In ritardo', value: 'delayed', completed: true, color: 'warn'},
+      {name: 'Cancellati', value: 'deleted', completed: true, color: 'primary'}
     ],
   };
 
@@ -171,13 +174,13 @@ export class HistoryComponent implements OnInit {
     let toSend: any = {}
     let all: boolean = true;
     for(let field in this.queriesForm.value){
-      if(field == "pending" || field == "approved" || field == "started" || field == "ended" || field == "delayed")
+      if(field == "pending" || field == "approved" || field == "started" || field == "ended" || field == "delayed" || field == "deleted")
         if(!this.queriesForm.value[field])
           all= false;
     }
     for(let field in this.queriesForm.value){
       if(this.queriesForm.value[field]){
-        if((field == "pending" || field == "approved" || field == "started" || field == "ended" || field == "delayed")){
+        if((field == "pending" || field == "approved" || field == "started" || field == "ended" || field == "delayed" || field == "deleted")){
           if(!all)
             toSend[field] = this.queriesForm.value[field];
         } else {

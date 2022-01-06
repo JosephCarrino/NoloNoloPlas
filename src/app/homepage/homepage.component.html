@@ -1,6 +1,6 @@
 <div class="fullcontainer">
 <h1 class="title"><b>NoloNoloPlas</b></h1>
-<mat-grid-list [cols]="breakpoint" (window:resize)="onResize($event)" rowHeight="64vh">
+<mat-grid-list [ngClass]="oneCol ? 'maxheight' : ''" [cols]="breakpoint" (window:resize)="onResize($event)" rowHeight="64vh">
     <mat-grid-tile id="lastile" [colspan]="2" class="propic">
     <div class="owl-carousel owl-theme my-carousel">
         <div class="item"><img class="carousel-image" src="assets/images/fight1.jpg"></div>

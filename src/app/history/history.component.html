@@ -52,7 +52,7 @@
             <p><b>Data di Fine: </b>{{rental.date_end}}</p>
             <p><b>Stato del Noleggio: </b>{{rental.state}}</p>
             <p *ngIf="rental.estimated.summary.length != 0"><b>Modifiche al prezzo:</b></p> <ul id="modify"><li class="red" *ngFor="let summ of rental.estimated.summary">{{summ}}</li></ul>
-            <h3><b>Costo: €{{rental.estimated.price}}</b></h3>
+            <h3 *ngIf="rental.estimated.price != 0"><b>Costo: €{{rental.estimated.price}}</b></h3>
             <h3 *ngIf="(rental.tosub == true)" class="red"><b>L'oggetto risulta al momento rotto o non disponibile!</b></h3>
         </mat-card-content>
         <mat-divider inset *ngIf="((rental.state == 'In attesa di approvazione.') || (rental.state == 'Approvato.') || (rental.tosub == true))"></mat-divider>

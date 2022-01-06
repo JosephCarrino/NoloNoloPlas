@@ -39,7 +39,7 @@ export class HomepageComponent implements OnInit {
       loop:true,
       margin:10,
       nav:false,
-      autoHeight:true,
+      autoHeight:false,
       responsive:{
           0:{
               items:1

@@ -31,6 +31,15 @@ export class RentComponent implements OnInit {
     'good': "Ottimo",
     'perfect': "Perfetto"};
 
+    newStateDict: any = { 
+      'pending': 'In attesa di approvazione.', 
+      'approved': 'Approvato.',
+      'progress': 'In corso.',
+      'ended': 'Terminato.',
+      'delayed': 'In ritardo.',
+      'deleted': 'Cancellato.'
+    }
+
   async ngOnInit(): Promise<void> {
     this.dateForm = this.formBuilder.group({
       date_start: ['', Validators.required],
@@ -100,9 +109,16 @@ export class RentComponent implements OnInit {
       for(let field in this.myArticle){
         this.newArticle[field]= this.myArticle[field];
       }
-      
+      let newSum= []
+      for(let sum of infos.estimated.summary){
+        sum = sum.replace('(', ' (')
+        for(let eng in this.stateDict){
+          sum = sum.replace(eng, this.stateDict[eng]);
+        }
+        newSum.push(sum);
+      }
       this.newArticle.final= infos.estimated.price;
-      this.newArticle.discounts=infos.estimated.summary;
+      this.newArticle.discounts= newSum;
       this.newArticle.start=  tmpStart;
       this.newArticle.end= tmpEnd;
       this.newArticle.fakePrice = Math.round((((this.dateForm.value['date_end'] - this.dateForm.value['date_start']) / (1000 * 60 * 60 * 24))) * this.newArticle.price);
