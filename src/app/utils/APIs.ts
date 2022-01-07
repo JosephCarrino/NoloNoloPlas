@@ -150,11 +150,17 @@ export async function getRental(id: string){
     }
 }
 
-export async function checkAvailability(id: string, date_start: string, date_end: string, rental: string= ''){
+export async function checkAvailability(id: string, date_start: string, date_end: string, rental: string= '', user: string= '', sugg: string= ''){
     try{
         let url: string = getArticleUrl + id + '/available?start=' + date_start + '&end=' + date_end;
         if(rental != '')
             url+= '&rental=' + rental;
+        if(user != ''){
+            url+= '&user=' + user;
+        }
+        if(sugg != ''){
+            url+= '&suggest=' + sugg;
+        }
         const response = await axios.get(url, {headers: {...advancedHeaders} });
         if(response.status === 200)
             return response.data;
@@ -179,9 +185,13 @@ export async function getArticles(){
     }
 }
 
-export async function createRental(body: any){
+export async function createRental(body: any, suggestId: string = ''){
     try{
-        const response = await axios.post(getRentalUrl, body, {headers: {...advancedHeaders}});
+        let url = getRentalUrl
+        if(suggestId != '')
+            url = url.slice(0, -1);
+            url += "?suggest=" + suggestId;
+        const response = await axios.post(url, body, {headers: {...advancedHeaders}});
         if(response.status === 200)
             return true;
         else

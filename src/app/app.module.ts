@@ -24,6 +24,7 @@ import { DialogContentDeleteComponent } from './dialog-content-delete/dialog-con
 import { HomepageComponent } from './homepage/homepage.component';
 import { PricecheckComponent } from './pricecheck/pricecheck.component';
 import { DialogContentReplaceComponent } from './dialog-content-replace/dialog-content-replace.component';
+import { DialogContentSuggestComponent } from './dialog-content-suggest/dialog-content-suggest.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { DialogContentReplaceComponent } from './dialog-content-replace/dialog-c
     DialogContentDeleteComponent,
     HomepageComponent,
     PricecheckComponent,
-    DialogContentReplaceComponent
+    DialogContentReplaceComponent,
+    DialogContentSuggestComponent
   ],
   imports: [
     BrowserModule,

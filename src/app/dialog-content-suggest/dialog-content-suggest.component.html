@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Noleggia anche questo...</h2>
+<mat-dialog-content>
+    <h3>Ti suggeriamo anche il seguente articolo, noleggialo con un <b>ulteriore 5% </b>di sconto nelle stesse date!</h3>
+  <app-article-card [article]="data.article" [newPage]="true" [sugg]="true"></app-article-card>
+  <br>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button color="warn" mat-button [mat-dialog-close]="false">No, grazie</button>
+  <button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial>Noleggia!</button>
+</mat-dialog-actions>

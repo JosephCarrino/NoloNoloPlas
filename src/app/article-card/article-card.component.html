@@ -10,8 +10,8 @@
     </mat-card-title-group>
         <mat-card-content>
             <p><b>Categoria: </b>{{article.category}}</p>
-            <p *ngIf="!tryRent && article.state != '' && !subs"><b>Stato dell'oggetto: </b><span [ngClass]="(article.state == 'broken') ? 'red' : ''">{{article.translated}}</span></p>
-            <h3 *ngIf="!(article.final) && !(article.max) && !subs"><b>Costo al giorno massimo: €{{article.price}}</b></h3>
+            <p *ngIf="!tryRent && article.state != '' && (!subs || sugg)"><b>Stato dell'oggetto: </b><span [ngClass]="(article.state == 'broken') ? 'red' : ''">{{article.translated}}</span></p>
+            <h3 *ngIf="!(article.final) && !(article.max) && (!subs || sugg)"><b>Costo al giorno massimo: €{{article.price}}</b></h3>
             <span *ngIf="article.start"><p><b>Data di inizio:   {{article.start}}</b></p></span>
             <span *ngIf="article.end"><p><b>Data di fine:   {{article.end}}</b></p></span>
             <div *ngIf="article.discounts"><span *ngIf="article.discounts.length != 0"><h3 class="red" *ngFor="let discount of article.discounts">{{discount}}</h3></span>

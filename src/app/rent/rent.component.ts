@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
-import { getArticle, checkAvailability, createRental } from '../utils/APIs';
+import { getArticle, checkAvailability, createRental, getAvailables, getArticles } from '../utils/APIs';
 import { getUserId } from '../utils/auth';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import {MatDialog} from '@angular/material/dialog';
+import { DialogContentSuggestComponent } from '../dialog-content-suggest/dialog-content-suggest.component';
 
 
 
@@ -23,7 +25,7 @@ export class RentComponent implements OnInit {
   public avalForm: FormGroup;
   public rentalCreated: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, public datepipe: DatePipe) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, public datepipe: DatePipe, public dialog: MatDialog) { }
 
   public stateDict: any = {
     'broken': "Non disponibile",
@@ -94,15 +96,76 @@ export class RentComponent implements OnInit {
     toSend['date_end']= this.datepipe.transform(this.dateForm.value['date_end'], 'YYYY-MM-dd');
     toSend['state']= 'pending';
     this.rentalCreated = await createRental(toSend);
+    await this.showSuggested();
 
   }
+
+  async showSuggested(){
+    if(this.dateForm.value['date_start'] && this.dateForm.value['date_end']){
+    const tmpStart: any = this.datepipe.transform(this.dateForm.value['date_start'], 'YYYY-MM-dd');
+    const tmpEnd: any = this.datepipe.transform(this.dateForm.value['date_end'], 'YYYY-MM-dd');
+    const allArticles = await getArticles();
+    const availables = await getAvailables(tmpStart, tmpEnd);
+    let toFind= "";
+    if (this.myArticle.superCategory == "Attacco")
+      toFind= "Difesa";
+    if (this.myArticle.superCategory == "Difesa")
+      toFind= "Attacco";
+    if (this.myArticle.category == "Arco")
+      toFind= "Frecce";
+    let suggested: any= {}
+    for(let article of allArticles){
+      if(availables.includes(article._id)){
+        if(article.superCategory == toFind){
+          suggested= article
+        }
+      }
+    }
+    if(Object.keys(suggested).length !== 0){
+      const myId= await getUserId();
+      let infos = await checkAvailability(suggested._id, tmpStart, tmpEnd, '', myId, this.getId());
+      let newSum= []
+      for(let sum of infos.estimated.summary){
+        sum = sum.replace('(', ' (')
+        for(let eng in this.stateDict){
+          sum = sum.replace(eng, this.stateDict[eng]);
+        }
+        newSum.push(sum);
+      }
+      suggested.translated= this.stateDict[suggested.state];
+      suggested.final= infos.estimated.price;
+      suggested.discounts= newSum;
+      suggested.start=  tmpStart;
+      suggested.end= tmpEnd;
+      suggested.fakePrice = Math.round((((this.dateForm.value['date_end'] - this.dateForm.value['date_start']) / (1000 * 60 * 60 * 24))) * suggested.price);
+      suggested.img= 'https://site202129.tw.cs.unibo.it/img/articlesImages/' + suggested.img;
+      const dialogRef = this.dialog.open(DialogContentSuggestComponent, {
+        data: {
+          article: suggested
+        }
+      });
+      dialogRef.afterClosed().subscribe(async result => {
+        if(result){
+          let toSend: any = {}
+          toSend['userId']= await getUserId();
+          toSend['object_id']= suggested._id;
+          toSend['date_start']= this.datepipe.transform(this.dateForm.value['date_start'], 'YYYY-MM-dd');
+          toSend['date_end']= this.datepipe.transform(this.dateForm.value['date_end'], 'YYYY-MM-dd');
+          toSend['state']= 'pending';
+          await createRental(toSend, this.getId());
+        }
+      });
+    }
+  }
+ }
 
   async checkPrice(){
     let tmpStart: any = new Date();
     tmpStart = this.datepipe.transform(this.dateForm.value['date_start'], 'YYYY-MM-dd'); 
     let tmpEnd: any = new Date();
     tmpEnd = this.datepipe.transform(this.dateForm.value['date_end'], 'YYYY-MM-dd'); 
-    let infos = await checkAvailability(this.getId(), tmpStart, tmpEnd);
+    const myId = await getUserId()
+    let infos = await checkAvailability(this.getId(), tmpStart, tmpEnd, '', myId);
     if(infos.available){
       this.notAvailable= false;
       this.avalForm.patchValue({aval: false})

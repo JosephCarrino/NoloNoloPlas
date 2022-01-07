@@ -15,6 +15,7 @@ export class ArticleCardComponent implements OnInit {
   @Input() tryRent: boolean;
   @Input() subs: boolean;
   @Input() userId: string;
+  @Input() sugg: boolean;
   constructor(private router: Router) { }
 
   ngOnInit(): void {
