@@ -55,9 +55,10 @@ export class RentalModifyComponent implements OnInit {
     let toSend = new FormData();
     for(let field in this.rentForm.value) {
       if(this.rentForm.value[field] != ""){
-        if(this.rentForm.value[field] < Date.now() || ((field == "date_end") && (this.rentForm.value["date_start"]) && (this.rentForm.value["date_start"] > this.rentForm.value[field]))){
+        if(this.rentForm.value[field] <= (Date.now() - 1000*60*60*24) || ((field == "date_end") && (this.rentForm.value["date_start"]) && (this.rentForm.value["date_start"] > this.rentForm.value[field]))){
           this.wrong= true;
           this.inProgress= false;
+          this.patched= false;
           return;
         } else {
           let tmp: any = new Date();
@@ -76,14 +77,12 @@ export class RentalModifyComponent implements OnInit {
           newToSend[value[0]] = value[1];
         }
       let available = await checkAvailability(this.myRentals[0].object_id, (newToSend.date_start) ? newToSend.date_start : this.myRentals[0].date_start, (newToSend.date_end) ? newToSend.date_end : this.myRentals[0].date_end, this.myRentals[0]._id);
-      console.log(newToSend);
       if(available.available && available.estimated.price > 0)
         res = await patchRental(this.myRentals[0]._id, newToSend);
       else
         res= false;
     }
     //const res: boolean= false;
-    console.log(res);
     this.inProgress = false;
     this.wrong = !res;
     this.patched = res;
