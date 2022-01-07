@@ -27,12 +27,12 @@ export class HomepageComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.breakpoint = (window.innerWidth <= 930) ? 2 : 4;
     this.notBreakpoint = (window.innerWidth <= 930)  ?  1 : 2;
     this.oneCol = (window.innerWidth <= 930) ? true : false;
-    this.refillArticles();
-    this.myCrusade();
+    await this.refillArticles();
+    await this.myCrusade();
   }
 
   ngAfterViewInit(){
@@ -77,7 +77,7 @@ export class HomepageComponent implements OnInit {
   }
 
   async myCrusade() {
-    this.isCrusade = await getCrusade();
+    return await getCrusade();
   }
 
 }
