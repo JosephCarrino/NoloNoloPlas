@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
-import { getArticle, checkAvailability, createRental, getAvailables, getArticles } from '../utils/APIs';
+import { getArticle, checkAvailability, createRental, getAvailables, getArticles, relateSuggest } from '../utils/APIs';
 import { getUserId } from '../utils/auth';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -23,7 +23,7 @@ export class RentComponent implements OnInit {
   public newArticle: any = {};
   public notAvailable: boolean = false;
   public avalForm: FormGroup;
-  public rentalCreated: boolean = false;
+  public rentalCreated: any = false;
 
   constructor(private formBuilder: FormBuilder, private router: Router, public datepipe: DatePipe, public dialog: MatDialog) { }
 
@@ -32,15 +32,6 @@ export class RentComponent implements OnInit {
     'suitable': "Buono",
     'good': "Ottimo",
     'perfect': "Perfetto"};
-
-    newStateDict: any = { 
-      'pending': 'In attesa di approvazione.', 
-      'approved': 'Approvato.',
-      'progress': 'In corso.',
-      'ended': 'Terminato.',
-      'delayed': 'In ritardo.',
-      'deleted': 'Cancellato.'
-    }
 
   async ngOnInit(): Promise<void> {
     this.dateForm = this.formBuilder.group({
@@ -152,7 +143,8 @@ export class RentComponent implements OnInit {
           toSend['date_start']= this.datepipe.transform(this.dateForm.value['date_start'], 'YYYY-MM-dd');
           toSend['date_end']= this.datepipe.transform(this.dateForm.value['date_end'], 'YYYY-MM-dd');
           toSend['state']= 'pending';
-          await createRental(toSend, this.getId());
+          const newID =await createRental(toSend, this.getId());
+          const lastRes = await relateSuggest(this.rentalCreated, newID)
         }
       });
     }

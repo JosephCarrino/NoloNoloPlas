@@ -191,9 +191,9 @@ export async function createRental(body: any, suggestId: string = ''){
         if(suggestId != '')
             url = url.slice(0, -1);
             url += "?suggest=" + suggestId;
-        const response = await axios.post(url, body, {headers: {...advancedHeaders}});
+        const response: any = await axios.post(url, body, {headers: {...advancedHeaders}});
         if(response.status === 200)
-            return true;
+            return response.data.rental._id;
         else
             return false;
     } catch (err:any){
@@ -286,6 +286,19 @@ export async function removePreferences(id: string, toSend: any){
         return true;    
     else
         return false;
+    } catch (err: any){
+        console.log(err);
+        return false;
+    }
+}
+
+export async function relateSuggest(id: string, suggested: string){
+    try{
+        const response: any = await axios.patch(getRentalUrl + "relateSuggest/" + id + "?suggested=" + suggested, {}, {headers: {...advancedHeaders}})
+        if(response.status === 200)
+            return true;
+        else
+            return false;
     } catch (err: any){
         console.log(err);
         return false;
