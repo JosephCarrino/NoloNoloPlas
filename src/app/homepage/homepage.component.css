@@ -82,6 +82,10 @@ mat-card{
     padding: 15px;
 }
 
+.red{
+    color: red;
+}
+
 /*.maxheight{
     max-height: 400px;
 }*/

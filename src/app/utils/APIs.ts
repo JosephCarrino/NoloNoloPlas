@@ -12,6 +12,7 @@ const getCategoriesUrl = baseUrl + 'api/articles/category';
 const getSuggestedUrl = baseUrl + 'api/articles/suggested/';
 const patchSuggestedUrl = baseUrl + 'api/rentals/suggested/';
 const getAvailablesUrl = baseUrl + 'api/articles/availables';
+const getCrusadeUrl = baseUrl + 'api/crusades/today';
 
 const standardHeaders = {
     'Content-Type': 'application/json',
@@ -297,6 +298,19 @@ export async function relateSuggest(id: string, suggested: string){
         const response: any = await axios.patch(getRentalUrl + "relateSuggest/" + id + "?suggested=" + suggested, {}, {headers: {...advancedHeaders}})
         if(response.status === 200)
             return true;
+        else
+            return false;
+    } catch (err: any){
+        console.log(err);
+        return false;
+    }
+}
+
+export async function getCrusade(){
+    try{
+        const response: any = await axios.get(getCrusadeUrl, {headers: {...advancedHeaders}});
+        if(response.status === 200)
+            return response.data.isCrusade;
         else
             return false;
     } catch (err: any){

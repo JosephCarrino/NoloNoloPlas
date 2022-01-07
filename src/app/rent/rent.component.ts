@@ -188,9 +188,11 @@ export class RentComponent implements OnInit {
 export const myValidator = (field1: string, field2: string): ValidatorFn => (control: AbstractControl) => {
   if(control){
     if(control.get(field1) && control.get(field2)){
-      if(control?.get(field1)?.value < control?.get(field2)?.value) {
-            return null;
-      }
+      if(Date.parse(control?.get(field1)?.value) > (Date.now() - 1000*60*60*24)){
+        if(control?.get(field1)?.value < control?.get(field2)?.value) {
+              return null;
+        }
+        }
       return { myValidator: { valid: false } };
     }
   }

@@ -1,7 +1,7 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OwlCarousel } from 'ngx-owl-carousel';
-import { getCategories } from '../utils/APIs';
+import { getCategories, getCrusade } from '../utils/APIs';
 import { isLoggedIn } from '../utils/auth';
 
 @Component({
@@ -16,7 +16,7 @@ export class HomepageComponent implements OnInit {
   notBreakpoint: number = 3;
   public myArticlesFiltered: any = [];
   oneCol: boolean = false;
-
+  public isCrusade = false;
 
   public stateDict: any = {
     'broken': "Non disponibile",
@@ -32,6 +32,7 @@ export class HomepageComponent implements OnInit {
     this.notBreakpoint = (window.innerWidth <= 930)  ?  1 : 2;
     this.oneCol = (window.innerWidth <= 930) ? true : false;
     this.refillArticles();
+    this.myCrusade();
   }
 
   ngAfterViewInit(){
@@ -73,6 +74,10 @@ export class HomepageComponent implements OnInit {
 
   mylog() {
     return isLoggedIn();
+  }
+
+  async myCrusade() {
+    this.isCrusade = await getCrusade();
   }
 
 }
