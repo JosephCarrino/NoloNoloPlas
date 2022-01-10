@@ -128,7 +128,7 @@ export class RentComponent implements OnInit {
       suggested.discounts= newSum;
       suggested.start=  tmpStart;
       suggested.end= tmpEnd;
-      suggested.fakePrice = Math.round((((this.dateForm.value['date_end'] - this.dateForm.value['date_start']) / (1000 * 60 * 60 * 24))) * suggested.price);
+      suggested.fakePrice = (Math.round(((Math.abs(this.dateForm.value['date_end'] - this.dateForm.value['date_start'])) / (1000 * 60 * 60 * 24))) * suggested.price).toFixed(2)
       suggested.img= 'https://site202129.tw.cs.unibo.it/img/articlesImages/' + suggested.img;
       const dialogRef = this.dialog.open(DialogContentSuggestComponent, {
         data: {
@@ -176,7 +176,7 @@ export class RentComponent implements OnInit {
       this.newArticle.discounts= newSum;
       this.newArticle.start=  tmpStart;
       this.newArticle.end= tmpEnd;
-      this.newArticle.fakePrice = Math.round((((this.dateForm.value['date_end'] - this.dateForm.value['date_start']) / (1000 * 60 * 60 * 24))) * this.newArticle.price);
+      this.newArticle.fakePrice = (Math.round(((Math.abs(this.dateForm.value['date_end'] - this.dateForm.value['date_start'])) / (1000 * 60 * 60 * 24))) * this.newArticle.price).toFixed(2);
    } else{
      this.newArticle = {}
       this.notAvailable= true;

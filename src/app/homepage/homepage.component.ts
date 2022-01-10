@@ -77,7 +77,11 @@ export class HomepageComponent implements OnInit {
   }
 
   async myCrusade() {
-    return await getCrusade();
+    let isToday= await getCrusade();
+    this.isCrusade= isToday;
   }
 
+  todayCrusade(){
+    return this.isCrusade;
+  }
 }
