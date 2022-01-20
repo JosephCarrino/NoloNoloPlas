@@ -2,7 +2,7 @@
     <mat-card-title-group>
         <mat-card-title>{{rental.myItem.name}}</mat-card-title>
         <mat-card-subtitle>{{rental.myItem.superCategory}}</mat-card-subtitle>
-        <img alt="{{rental.myItem.name}} image" class="imgrent" mat-card-md-image src={{rental.myItem.img}}>
+        <img alt="Immagine relativa a {{rental.myItem.name}}" class="imgrent" mat-card-md-image src={{rental.myItem.img}}>
     </mat-card-title-group>
     <form id="regform" [formGroup]="rentForm" #formDir="ngForm" (ngSubmit)="sendPatch()">
         <mat-card-content>

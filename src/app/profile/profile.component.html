@@ -1,8 +1,9 @@
+
 <mat-grid-list [cols]="breakpoint" rowHeight="90vh" (window:resize)="onResize($event)">
     <mat-grid-tile id="lastile" [colspan]="notBreakpoint" rowspawn=".5" rowhHeight="20vh" class="propic" min-width="300px">
         <div id="proimgdiv" [ngClass]="oneCol ? 'centered' : ''">
-            <img [ngClass]="oneCol ? 'centered' : ''" id="proimg" [style.width.%]="imgWidth" [src]="imageUrl" min-width="300px">
-            <input #csvInput hidden="true" type="file" onclick="this.value=null" (change)="onFileChange($event)" accept="image/*"/>
+            <img [ngClass]="oneCol ? 'centered' : ''" id="proimg" [style.width.%]="imgWidth" [src]="imageUrl" min-width="300px" alt="Immagine del profilo utente">
+            <input #csvInput hidden="true" type="file" onclick="this.value=null" (change)="onFileChange($event)" accept="image/*" aria-label="Cambia immagine del profilo"/>
             <button class="centered" type="button" mat-flat-button color="primary" (click)="csvInput.click()">Carica immagine del profilo</button>
         </div>
         <!--<mat-card class="example-card">

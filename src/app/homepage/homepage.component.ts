@@ -41,6 +41,7 @@ export class HomepageComponent implements OnInit {
       margin:10,
       nav:false,
       autoHeight:false,
+      autoplay:true,
       responsive:{
           0:{
               items:1
@@ -52,8 +53,17 @@ export class HomepageComponent implements OnInit {
               items:1
           }
       }
-  })}, 50)
-    
+  })}, 50);
+    setTimeout(() => {
+      let dots: any = $('.owl-dot');
+      let i: number = 0;
+      for (let dot of dots){
+        let thisInput: any = $('<input>');
+        thisInput.value= "Immagine numero " + i;
+        dot.append(thisInput);
+        i++;
+      }
+    }, 75);
   }
 
   onResize(event: any) {

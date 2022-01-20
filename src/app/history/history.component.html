@@ -45,13 +45,13 @@
     <mat-card-title-group [ngClass]="(rental.state == 'Cancellato.') ? 'deleted' : ''">
         <mat-card-title>{{rental.myItem.name}}</mat-card-title>
         <mat-card-subtitle>{{rental.myItem.superCategory}}</mat-card-subtitle>
-        <img alt="{{rental.myItem.name}} image" class="imgrent" mat-card-md-image src={{rental.myItem.img}}>
+        <img alt="Immagine relativa a {{rental.myItem.name}}" class="imgrent" mat-card-md-image src={{rental.myItem.img}}>
     </mat-card-title-group>
         <mat-card-content>
             <p><b>Data di Inizio: </b>{{rental.date_start}}</p>
             <p><b>Data di Fine: </b>{{rental.date_end}}</p>
             <p><b>Stato del Noleggio: </b>{{rental.state}}</p>
-            <p *ngIf="rental.estimated.summary.length != 0"><b>Modifiche al prezzo:</b></p> <ul id="modify"><li class="red" *ngFor="let summ of rental.estimated.summary">{{summ}}</li></ul>
+            <p *ngIf="rental.estimated.summary.length != 0"><b>Modifiche al prezzo:</b></p> <ul id="modify"><li class="myred" *ngFor="let summ of rental.estimated.summary"><b>{{summ}}</b></li></ul>
             <h3 *ngIf="rental.estimated.price != 0 && rental.state !='Cancellato.'"><b>Costo: €{{rental.estimated.price}}</b></h3>
             <h3 *ngIf="(rental.tosub == true)" class="red"><b>L'oggetto risulta al momento rotto o non disponibile!</b></h3>
         </mat-card-content>

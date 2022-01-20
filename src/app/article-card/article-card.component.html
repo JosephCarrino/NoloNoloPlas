@@ -2,7 +2,7 @@
     <mat-card-title-group [ngClass]="(article.state == 'broken') ? 'broken' : ''">
         <mat-card-title>{{article.name}}</mat-card-title>
         <mat-card-subtitle>{{article.superCategory}}</mat-card-subtitle>
-        <img alt="{{article.name}} image" class="imgrent" mat-card-md-image src={{article.img}}>
+        <img alt="Immagine relativa a {{article.name}}" class="imgrent" mat-card-md-image src={{article.img}}>
         <section *ngIf="!newPage && !tryRent">
             <button *ngIf="article.favorite" type="button" class="favorite" (click)="removePref(article._id)"><mat-icon>favorite</mat-icon></button>
             <button *ngIf="!article.favorite" type="button" class="favorite" (click)="addPref(article._id)"><mat-icon>favorite_border</mat-icon></button>
@@ -10,7 +10,7 @@
     </mat-card-title-group>
         <mat-card-content>
             <p><b>Categoria: </b>{{article.category}}</p>
-            <p *ngIf="!tryRent && article.state != '' && (!subs || sugg)"><b>Stato dell'oggetto: </b><span [ngClass]="(article.state == 'broken') ? 'red' : ''">{{article.translated}}</span></p>
+            <p *ngIf="!tryRent && article.state != '' && (!subs || sugg)"><b>Stato dell'oggetto: </b><span [ngClass]="(article.state == 'broken') ? 'myred' : ''"><b *ngIf="(article.state == 'broken')">{{article.translated}}</b></span></p>
             <h3 *ngIf="!(article.final) && !(article.max) && (!subs || sugg)"><b>Costo al giorno massimo: €{{article.price}}</b></h3>
             <span *ngIf="article.start"><p><b>Data di inizio:   {{article.start}}</b></p></span>
             <span *ngIf="article.end"><p><b>Data di fine:   {{article.end}}</b></p></span>

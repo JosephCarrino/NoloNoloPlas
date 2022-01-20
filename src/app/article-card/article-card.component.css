@@ -84,6 +84,10 @@ body{
     color: red;
 }
 
+.myred{
+    color: #FF2626;
+}
+
 .favorite{
     width: 40px;
     height: 40px;
@@ -91,6 +95,6 @@ body{
     text-decoration: none;
     border: none;
     cursor:pointer;
-    color: #ff5252;
+    color: #FF2626;
     background-color: #f7f7f7;
 }
