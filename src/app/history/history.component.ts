@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { getUserId } from '../utils/auth';
-import { getRentals, getArticle, delRental, getSuggested, patchSuggested } from '../utils/APIs';
+import { getRentals, getArticle, delRental, getSuggested, patchSuggested, getRental } from '../utils/APIs';
 import { Router, NavigationStart } from '@angular/router';
 import * as myGlobals from '../globals';
 import {ThemePalette} from '@angular/material/core';
@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogContentDeleteComponent } from '../dialog-content-delete/dialog-content-delete.component';
 import { DialogContentReplaceComponent } from '../dialog-content-replace/dialog-content-replace.component';
+import { DialogContentMysuggestComponent } from '../dialog-content-mysuggest/dialog-content-mysuggest.component';
 
 
 export interface Task {
@@ -236,22 +237,41 @@ export class HistoryComponent implements OnInit {
  async showSuggested(id: string, start: string, end: string, rentalId: string){
     const response = await getSuggested(id, start, end);
     const newObj = response.alternative;
-    newObj.img= 'https://site202129.tw.cs.unibo.it/img/articlesImages/' + newObj.img;
-    const dialogRef = this.dialog.open(DialogContentReplaceComponent, {
-      data: {
-        article: newObj
-      }
-    });
-    dialogRef.afterClosed().subscribe(async result => {
-      if(result){
-        const res = await patchSuggested(rentalId, newObj._id);
-        if(res)
-          this.redirectTo('/history')
-        else{
-          this.deleteRental(id, true)
+    if(newObj){
+      newObj.img= 'https://site202129.tw.cs.unibo.it/img/articlesImages/' + newObj.img;
+      const dialogRef = this.dialog.open(DialogContentReplaceComponent, {
+        data: {
+          article: newObj
         }
-      }
-    });
+      });
+      dialogRef.afterClosed().subscribe(async result => {
+        if(result){
+          const res = await patchSuggested(rentalId, newObj._id);
+          if(res)
+            this.redirectTo('/history')
+          else{
+            this.deleteRental(id, true)
+          }
+        }
+      });
+    } else {
+      this.deleteRental(rentalId, true);
+    }
  }
  
+ async modifyRental(rentalId: string, toModify: string){
+    let toPass: any = await getRental(rentalId);
+    let nameToPass: any = await getArticle(toPass.data.object_id);
+    const dialogRef = this.dialog.open(DialogContentMysuggestComponent, {
+      data: {
+        name: nameToPass.data.name
+      }
+    });
+    dialogRef.afterClosed().subscribe(async result => { 
+      if(result){
+        this.router.navigate(['/modify/' + toModify]);
+      }
+    })
+ }
+
 }

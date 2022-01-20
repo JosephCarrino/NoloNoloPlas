@@ -25,6 +25,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { PricecheckComponent } from './pricecheck/pricecheck.component';
 import { DialogContentReplaceComponent } from './dialog-content-replace/dialog-content-replace.component';
 import { DialogContentSuggestComponent } from './dialog-content-suggest/dialog-content-suggest.component';
+import { DialogContentMysuggestComponent } from './dialog-content-mysuggest/dialog-content-mysuggest.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DialogContentSuggestComponent } from './dialog-content-suggest/dialog-c
     HomepageComponent,
     PricecheckComponent,
     DialogContentReplaceComponent,
-    DialogContentSuggestComponent
+    DialogContentSuggestComponent,
+    DialogContentMysuggestComponent
   ],
   imports: [
     BrowserModule,

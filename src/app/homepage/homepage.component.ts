@@ -54,16 +54,16 @@ export class HomepageComponent implements OnInit {
           }
       }
   })}, 50);
-    setTimeout(() => {
+    /*setTimeout(() => {
       let dots: any = $('.owl-dot');
       let i: number = 0;
       for (let dot of dots){
         let thisInput: any = $('<input>');
-        thisInput.value= "Immagine numero " + i;
-        dot.append(thisInput);
+        thisInput.attr("value", "Immagine numero " + i); 
+        $(dot).append(thisInput);
         i++;
       }
-    }, 75);
+    }, 75);*/
   }
 
   onResize(event: any) {

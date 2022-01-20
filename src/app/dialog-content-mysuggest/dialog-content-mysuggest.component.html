@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Elimina ordine</h2>
+<mat-dialog-content>
+  <p>Vuoi davvero modificare questo ordine? Lo sconto su <b>{{data.name}}</b> verrà rimosso!</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Annulla</button>
+  <button color="warn" mat-button [mat-dialog-close]="true" cdkFocusInitial>Modifica</button>
+</mat-dialog-actions>
