@@ -1,5 +1,5 @@
 <mat-card class="article" >
-    <mat-card-title-group [ngClass]="(article.state == 'broken') ? 'broken' : ''">
+    <mat-card-title-group [ngClass]="((article.state == 'broken') || (article.state == 'unavailable')) ? 'broken' : ''">
         <mat-card-title>{{article.name}}</mat-card-title>
         <mat-card-subtitle>{{article.superCategory}}</mat-card-subtitle>
         <img alt="Immagine relativa a {{article.name}}" class="imgrent" mat-card-md-image src={{article.img}}>
@@ -19,9 +19,9 @@
             <span *ngIf="article.final && article.discounts.length != 0"><h4><b>Prezzo finale:   </b><span style="text-decoration:line-through">€{{article.fakePrice}}</span><b><span class="red"> €{{article.final}}</span></b></h4></span></div>
             <span *ngIf="article.max"><h4><b>Prezzo finale massimo:  <span class="red"> €{{article.max}}</span></b></h4></span>
         </mat-card-content>
-        <mat-divider inset *ngIf="!(article.state == 'broken') && !newPage && !subs"></mat-divider>
+        <mat-divider inset *ngIf="!((article.state == 'broken') || (article.state == 'unavailable')) && !newPage && !subs"></mat-divider>
         <mat-card-actions *ngIf="!subs">
-            <button *ngIf="((!tryRent) || mylog() == true)  && !newPage && !(article.state == 'broken')" mat-button type="button" routerLink="/rental/{{article._id}}">NOLEGGIA</button>
-            <button *ngIf="(!(article.state == 'broken') && !newPage && tryRent) && mylog()  == false" mat-button type="button" (click)="myNav()">PROVA NOLEGGIO</button>
+            <button *ngIf="((!tryRent) || mylog() == true)  && !newPage && !((article.state == 'broken') || (article.state == 'unavailable'))" mat-button type="button" routerLink="/rental/{{article._id}}">NOLEGGIA</button>
+            <button *ngIf="(!((article.state == 'broken') || (article.state == 'unavailable')) && !newPage && tryRent) && mylog()  == false" mat-button type="button" (click)="myNav()">PROVA NOLEGGIO</button>
     </mat-card-actions>
 </mat-card>
