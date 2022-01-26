@@ -92,7 +92,7 @@ export class HistoryComponent implements OnInit {
     for(let rental of moRent){
       rental.myItem = await getArticle(rental.object_id);
       rental.myItem = rental.myItem.data;
-      if(tomorrow == rental.date_start.slice(0,10) && rental.myItem.state == "broken" || rental.myItem.state == "unavailable")
+      if(tomorrow == rental.date_start.slice(0,10) && (rental.myItem.state == "broken" || rental.myItem.state == "unavailable" || rental.worse))
         rental.tosub = true;
       rental.date_start = rental.date_start.slice(0,10);
       rental.date_end = rental.date_end.slice(0,10);
