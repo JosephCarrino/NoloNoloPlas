@@ -10,7 +10,7 @@
     </mat-card-title-group>
         <mat-card-content>
             <p><b>Categoria: </b>{{article.category}}</p>
-            <p *ngIf="!tryRent && article.state != '' && (!subs || sugg)"><b>Stato dell'oggetto: </b><span [ngClass]="(article.state == 'broken') ? 'myred' : ''">{{article.translated}}</span></p>
+            <p *ngIf="!tryRent && article.state != '' && (!subs || sugg)"><b>Stato dell'oggetto: </b><span [ngClass]="(article.state == 'broken' || article.state == 'unavailable') ? 'myred' : ''">{{article.translated}}</span></p>
             <h3 *ngIf="!(article.final) && !(article.max) && (!subs || sugg)"><b>Costo al giorno massimo: €{{article.price}}</b></h3>
             <span *ngIf="article.start"><p><b>Data di inizio:   {{article.start}}</b></p></span>
             <span *ngIf="article.end"><p><b>Data di fine:   {{article.end}}</b></p></span>

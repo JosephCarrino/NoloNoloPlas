@@ -260,18 +260,21 @@ export class HistoryComponent implements OnInit {
  }
  
  async modifyRental(rentalId: string, toModify: string){
-    let toPass: any = await getRental(rentalId);
-    let nameToPass: any = await getArticle(toPass.data.object_id);
-    const dialogRef = this.dialog.open(DialogContentMysuggestComponent, {
-      data: {
-        name: nameToPass.data.name
-      }
-    });
-    dialogRef.afterClosed().subscribe(async result => { 
-      if(result){
-        this.router.navigate(['/modify/' + toModify]);
-      }
-    })
- }
-
+   if(rentalId){
+      let toPass: any = await getRental(rentalId);
+      let nameToPass: any = await getArticle(toPass.data.object_id);
+      const dialogRef = this.dialog.open(DialogContentMysuggestComponent, {
+        data: {
+          name: nameToPass.data.name
+        }
+      });
+      dialogRef.afterClosed().subscribe(async result => { 
+        if(result){
+          this.router.navigate(['/modify/' + toModify]);
+        }
+      })
+    } else {
+    this.router.navigate(['/modify/' + toModify]);
+    }
+  }
 }
