@@ -75,7 +75,7 @@ export class HistoryComponent implements OnInit {
   queriesForm = this.formBuilder.group({
     pending: true,
     approved: true,
-    started: true,
+    progress: true,
     ended: true,
     delayed: true,
     deleted: true,
@@ -92,7 +92,7 @@ export class HistoryComponent implements OnInit {
     for(let rental of moRent){
       rental.myItem = await getArticle(rental.object_id);
       rental.myItem = rental.myItem.data;
-      if(tomorrow == rental.date_start.slice(0,10) && (rental.myItem.state == "broken" || rental.myItem.state == "unavailable" || rental.worse))
+      if((tomorrow == rental.date_start.slice(0,10) || (new Date()).toISOString().split('T')[0]) && (rental.myItem.state == "broken" || rental.myItem.state == "unavailable" || rental.worse))
         rental.tosub = true;
       rental.date_start = rental.date_start.slice(0,10);
       rental.date_end = rental.date_end.slice(0,10);
@@ -143,7 +143,7 @@ export class HistoryComponent implements OnInit {
     subtasks: [
       {name: 'In attesa di approvazione', value: 'pending', completed: true, color: 'primary'},
       {name: 'Approvati', value: 'approved', completed: true, color: 'accent'},
-      {name: 'Iniziati', value: 'started', completed: true, color: 'warn'},
+      {name: 'Iniziati', value: 'progress', completed: true, color: 'warn'},
       {name: 'Conclusi', value: 'ended', completed: true, color: 'accent'},
       {name: 'In ritardo', value: 'delayed', completed: true, color: 'warn'},
       {name: 'Cancellati', value: 'deleted', completed: true, color: 'primary'}
@@ -175,18 +175,23 @@ export class HistoryComponent implements OnInit {
     let toSend: any = {}
     let all: boolean = true;
     for(let field in this.queriesForm.value){
-      if(field == "pending" || field == "approved" || field == "started" || field == "ended" || field == "delayed" || field == "deleted")
+      if(field == "pending" || field == "approved" || field == "progress" || field == "ended" || field == "delayed" || field == "deleted")
         if(!this.queriesForm.value[field])
           all= false;
     }
     for(let field in this.queriesForm.value){
       if(this.queriesForm.value[field]){
-        if((field == "pending" || field == "approved" || field == "started" || field == "ended" || field == "delayed" || field == "deleted")){
+        if((field == "pending" || field == "approved" || field == "progress" || field == "ended" || field == "delayed" || field == "deleted")){
           if(!all)
             toSend[field] = this.queriesForm.value[field];
         } else {
           toSend[field] = this.queriesForm.value[field];
         }
+      }
+    }
+    if(this.queriesForm.value['state']){
+      if(this.queriesForm.value['state'] == ''){
+        delete this.queriesForm.value['state'];
       }
     }
     let newToSend: any = {}

@@ -90,7 +90,7 @@ export async function patchRental(id: string, patched: any){
 export async function getRentals(id: string, queries: any){
     try{
         let url = patchUserUrl + id + "/rentals";
-        let first= 0;
+        /*let first= 0;
         if(queries){
             for(let field in queries){
                 if(field == 'date_start')
@@ -99,11 +99,19 @@ export async function getRentals(id: string, queries: any){
                     first= 1;
                 else if(field == 'state')
                     first= 2;
+                break;
             }
             url+='?';
             if(queries.date_start) (first == 0) ? url+= 'date_start=' + queries.date_start : url+= '&date_start=' + queries.date_start ;
             if(queries.date_end) (first == 1) ? url+= 'date_end=' + queries.date_end : url+= '&end=' + queries.date_end;
             if(queries.state) (first ==  2) ?  url+='state=' + queries.state : url+='&state=' + queries.state;
+        }*/
+        if(queries){
+            url+='?';
+            for(let field in queries){
+                url+=field + '=' + queries[field] + '&';
+            }
+            url = url.slice(0, url.length-1);
         }
         const response = await axios.get(url, { headers: {...advancedHeaders} });
         if(response.status === 200)
