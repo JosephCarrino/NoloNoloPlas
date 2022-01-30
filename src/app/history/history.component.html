@@ -53,16 +53,16 @@
             <p><b>Stato del Noleggio: </b>{{rental.state}}</p>
             <p *ngIf="rental.estimated.summary.length != 0"><b>Modifiche al prezzo:</b></p> <ul id="modify"><li class="myred" *ngFor="let summ of rental.estimated.summary"><b>{{summ}}</b></li></ul>
             <h3 *ngIf="rental.estimated.price != 0 && rental.state !='Cancellato.'"><b>Costo: €{{rental.estimated.price}}</b></h3>
-            <h3 *ngIf="((rental.tosub == true) && (rental.state != 'In ritardo.') && (!rental.worse) && (rental.state != 'Cancellato.'))" class="red"><b>L'oggetto risulta al momento rotto o non disponibile!</b></h3>
-            <h3 *ngIf="(rental.worse == true && rental.tosub == true) && (rental.state != 'Cancellato.')" class="red"><b>L'oggetto è al momento in condizioni peggiori rispetto al momento del noleggio!</b></h3>
-            <h3 *ngIf="(rental.state == 'In ritardo.') && (rental.state != 'Cancellato.')" class="red"><b>Oggetto non restiuito! Si sollecita l'utente a una restituzione celere.</b></h3>
+            <h3 *ngIf="((rental.tosub == true) && (rental.state != 'In ritardo.') && (!rental.worse) && (rental.state != 'Cancellato.') && (rental.state != 'Terminato.'))" class="red"><b>L'oggetto risulta al momento rotto o non disponibile!</b></h3>
+            <h3 *ngIf="(rental.worse == true && rental.tosub == true) && (rental.state != 'Cancellato.') && (rental.state != 'Terminato.')" class="red"><b>L'oggetto è al momento in condizioni peggiori rispetto al momento del noleggio!</b></h3>
+            <h3 *ngIf="(rental.state == 'In ritardo.') && (rental.state != 'Cancellato.') && (rental.state != 'Terminato.')" class="red"><b>Oggetto non restiuito! Si sollecita l'utente a una restituzione celere.</b></h3>
         </mat-card-content>
-        <mat-divider inset *ngIf="(((rental.state == 'In attesa di approvazione.') || (rental.state == 'Approvato.') || (rental.tosub == true)) && (rental.state != 'In ritardo.') && (rental.state != 'Cancellato.'))"></mat-divider>
+        <mat-divider inset *ngIf="(((rental.state == 'In attesa di approvazione.') || (rental.state == 'Approvato.') || (rental.tosub == true)) && (rental.state != 'In ritardo.') && (rental.state != 'Cancellato.') && (rental.state != 'Terminato.'))"></mat-divider>
         <mat-card-actions *ngIf="(((rental.state == 'In attesa di approvazione.') || (rental.state == 'Approvato.')) && (!rental.tosub) && (rental.state != 'Cancellato.'))">
             <button mat-button type="button" (click) = "modifyRental(rental.suggested, rental._id)">MODIFICA</button>
             <button mat-button type="button" color="warn" (click)="deleteRental(rental._id)">ELIMINA</button>
         </mat-card-actions>
-        <mat-card-actions *ngIf="(((rental.tosub == true) && (rental.state != 'In ritardo.') && (rental.state != 'Cancellato.')))">
+        <mat-card-actions *ngIf="(((rental.tosub == true) && (rental.state != 'In ritardo.') && (rental.state != 'Cancellato.') && (rental.state != 'Terminato.')))">
             <button mat-button type="button" (click) = "modifyRental(rental.suggested, rental._id)">MODIFICA</button>
             <button mat-button type="button" color="warn" (click)="deleteRental(rental._id)">ELIMINA</button>
             <button mat-button type="button" color="primary" (click)="showSuggested(rental.myItem._id, rental.date_start, rental.date_end, rental._id)">SOSTITUISCI GRATIS</button>
